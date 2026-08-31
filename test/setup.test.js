@@ -30,6 +30,15 @@ test("every scenario contains valid board coordinates and four weapon drops", ()
   }
 });
 
+test("every respawn location is on a board edge", () => {
+  for (const scenario of SCENARIOS) {
+    const respawns = [...scenario.respawns.blue, ...scenario.respawns.red];
+    respawns.forEach(({ x, y }) => {
+      assert.ok(x === 1 || x === 8 || y === 1 || y === 8, `${scenario.name} has an interior respawn`);
+    });
+  }
+});
+
 test("item generation never places an item in a deployment zone", () => {
   for (const scenario of SCENARIOS) {
     const blocked = deploymentKeys(scenario);

@@ -68,20 +68,16 @@ test("hill rotation offers every other hill exactly once for each current hill",
   const rotation = scenario.hillRotation;
 
   assert.equal(hillLabels.includes(rotation.initial), true);
-  assert.equal(rotation.rolls.length, hillLabels.length - 1);
-  assert.deepEqual(Object.keys(rotation.nextByCurrent), hillLabels);
+  assert.deepEqual(rotation.hills, hillLabels.filter((label) => label !== rotation.initial));
+  assert.deepEqual(rotation.rolls, ["1–2", "3–4", "5–6", "7–8"]);
+  assert.equal(rotation.rolls.length, rotation.hills.length);
 
   hillLabels.forEach((current) => {
-    const nextHills = rotation.nextByCurrent[current];
-    const chartHills = hillLabels.slice(1);
-    const expectedOrder = current === rotation.initial
-      ? chartHills
-      : chartHills.map((label) => (label === current ? rotation.initial : label));
+    const nextHills = rotation.hills.map((label) => (label === current ? rotation.initial : label));
     assert.equal(nextHills.length, hillLabels.length - 1);
     assert.equal(new Set(nextHills).size, nextHills.length);
     assert.equal(nextHills.includes(current), false);
     assert.deepEqual([...nextHills].sort(), hillLabels.filter((label) => label !== current).sort());
-    assert.deepEqual(nextHills, expectedOrder, `${current} should give A the active hill's roll range`);
   });
 });
 

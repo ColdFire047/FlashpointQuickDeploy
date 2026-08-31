@@ -1,9 +1,17 @@
 {
   "name": "Flashpoint Quick Setup",
-  "short_name": "Quick Setup",
+  "short_name": "FP Setup",
   "description": "Fast scenario and item setup for Halo: Flashpoint.",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#2d2f2f",
-  "theme_color": "#202426"
+  "theme_color": "#202426",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
 }

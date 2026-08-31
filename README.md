@@ -19,6 +19,7 @@ Big Team Battle scenarios are intentionally excluded because they use a differen
 - Deployment zones are excluded from Item placement.
 - Unique Item cubes are a deliberate casual-play house rule; official independent dice rolls can produce duplicates.
 - The four Weapon Drop marker ranges are shuffled across the scenario's fixed weapon locations.
+- King of the Hill includes the Round 1 starting hill and the D8 lookup for every later hill change.
 - Changing only the scenario keeps legal, unique Item coordinates and replaces any that become illegal or duplicated.
 - The current setup survives an accidental refresh in the same browser tab.
 

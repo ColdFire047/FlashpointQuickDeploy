@@ -112,6 +112,18 @@ button { font: inherit; }
 .cell.deployment-red { background: #ff624c; }
 .cell.weapon-spawn { box-shadow: inset 0 0 0 3px var(--gold); }
 
+.cell.weapon-spawn::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  width: 44%;
+  aspect-ratio: 1;
+  background:
+    linear-gradient(45deg, transparent 44%, rgba(91, 116, 132, 0.34) 45% 55%, transparent 56%),
+    linear-gradient(-45deg, transparent 44%, rgba(91, 116, 132, 0.34) 45% 55%, transparent 56%);
+  pointer-events: none;
+}
+
 .axis-label {
   display: grid;
   place-items: center;
@@ -142,6 +154,14 @@ button { font: inherit; }
 }
 
 .respawn-edge.red { --respawn-colour: var(--red); }
+
+.respawn-edge.on-team-deployment {
+  filter:
+    drop-shadow(1px 0 0 #10212d)
+    drop-shadow(-1px 0 0 #10212d)
+    drop-shadow(0 1px 0 #10212d)
+    drop-shadow(0 -1px 0 #10212d);
+}
 
 .respawn-edge.edge-left,
 .respawn-edge.edge-right {
@@ -205,9 +225,14 @@ button { font: inherit; }
 
 .marker-objective,
 .marker-zone {
+  min-width: 22px;
+  min-height: 22px;
+  padding: 0;
   color: #16191a;
   background: var(--objective);
+  border: 2px solid #10212d;
   border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(255, 243, 139, 0.78);
 }
 
 .marker-station { color: #fff; background: #5f3c9b; }

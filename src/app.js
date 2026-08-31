@@ -86,6 +86,7 @@ function renderBoard() {
         if (hasCoordinate(scenario.respawns[team], x, y)) {
           const respawn = document.createElement("span");
           respawn.className = `respawn-edge ${team} ${respawnEdgeClass(x, y)}`;
+          if (hasCoordinate(scenario.deployment[team], x, y)) respawn.classList.add("on-team-deployment");
           respawn.setAttribute("aria-hidden", "true");
           cell.setAttribute("aria-label", `Cube ${key}; ${team} respawn`);
           cell.append(respawn);

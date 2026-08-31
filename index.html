@@ -36,6 +36,21 @@
       <div id="board" class="board" role="grid" aria-label="8 by 8 scenario map"></div>
 
       <div class="readouts">
+        <section id="hill-rotation" class="readout hill-rotation" aria-labelledby="hill-rotation-heading" hidden>
+          <h2 id="hill-rotation-heading">Hill Rotation</h2>
+          <p id="hill-round-one" class="hill-round-one"></p>
+          <div class="hill-table-wrap">
+            <table class="hill-table">
+              <caption class="sr-only">Next active hill by current hill and D8 result</caption>
+              <thead>
+                <tr id="hill-roll-ranges"></tr>
+              </thead>
+              <tbody id="hill-rotation-rows"></tbody>
+            </table>
+          </div>
+          <p class="readout-note">After Round 1, roll a D8 on the row for the current hill. The next hill must be different.</p>
+        </section>
+
         <section class="readout" aria-labelledby="item-heading">
           <h2 id="item-heading">Item Spawn Locations</h2>
           <div id="item-coordinates" class="coordinate-list"></div>

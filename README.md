@@ -15,11 +15,11 @@ Big Team Battle scenarios are intentionally excluded because they use a differen
 
 ## Rules handled by the generator
 
-- Eight starting Items are generated independently.
-- Both dice are effectively rerolled when an Item would land in either deployment zone.
-- Multiple Items can occupy the same cube.
+- Eight starting Items are generated in different legal cubes.
+- Deployment zones are excluded from Item placement.
+- Unique Item cubes are a deliberate casual-play house rule; official independent dice rolls can produce duplicates.
 - The four Weapon Drop marker ranges are shuffled across the scenario's fixed weapon locations.
-- Changing only the scenario keeps legal Item coordinates and rerolls any that become illegal in the new deployment zones.
+- Changing only the scenario keeps legal, unique Item coordinates and replaces any that become illegal or duplicated.
 - The current setup survives an accidental refresh in the same browser tab.
 
 ## Development

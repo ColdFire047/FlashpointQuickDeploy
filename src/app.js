@@ -202,39 +202,35 @@ function renderHillRotation() {
   elements.hillRotation.hidden = !rotation;
   if (!rotation) return;
 
-  elements.hillRoundOne.textContent = `Round 1: Hill ${rotation.initial}`;
+  elements.hillRoundOne.textContent = `Start at ${rotation.initial}`;
 
   const headerFragment = document.createDocumentFragment();
   const currentHeading = document.createElement("th");
   currentHeading.scope = "col";
-  currentHeading.textContent = "Current";
+  currentHeading.textContent = "Hill";
   headerFragment.append(currentHeading);
 
-  rotation.rolls.forEach((roll) => {
+  rotation.hills.forEach((hill) => {
     const heading = document.createElement("th");
     heading.scope = "col";
-    heading.textContent = roll;
+    heading.textContent = hill;
     headerFragment.append(heading);
   });
 
-  const rowFragment = document.createDocumentFragment();
-  Object.entries(rotation.nextByCurrent).forEach(([current, nextHills]) => {
-    const row = document.createElement("tr");
-    const rowHeading = document.createElement("th");
-    rowHeading.scope = "row";
-    rowHeading.textContent = current;
-    row.append(rowHeading);
+  const row = document.createElement("tr");
+  const rowHeading = document.createElement("th");
+  rowHeading.scope = "row";
+  rowHeading.textContent = "D8";
+  row.append(rowHeading);
 
-    nextHills.forEach((nextHill) => {
-      const cell = document.createElement("td");
-      cell.textContent = nextHill;
-      row.append(cell);
-    });
-    rowFragment.append(row);
+  rotation.rolls.forEach((roll) => {
+    const cell = document.createElement("td");
+    cell.textContent = roll;
+    row.append(cell);
   });
 
   elements.hillRollRanges.replaceChildren(headerFragment);
-  elements.hillRotationRows.replaceChildren(rowFragment);
+  elements.hillRotationRows.replaceChildren(row);
 }
 
 function announce(message) {

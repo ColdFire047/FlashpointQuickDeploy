@@ -509,8 +509,8 @@ summary:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 
 .project-footer {
   width: min(100%, 590px);
-  margin: 28px auto 0;
-  padding-top: 16px;
+  margin: 32px auto 0;
+  padding-top: 18px;
   border-top: 1px solid rgba(174, 184, 188, 0.2);
   color: var(--muted);
   font-size: 0.76rem;
@@ -520,17 +520,25 @@ summary:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .project-footer p { margin: 4px 0; }
 .project-footer strong { color: var(--text); }
 
+.creator-mark {
+  display: block;
+  width: 68px;
+  height: auto;
+  margin: 0 auto 16px;
+  opacity: 0.9;
+}
+
+.footer-summary {
+  color: rgba(174, 184, 188, 0.86);
+  font-size: 0.72rem;
+}
+
 .release-meta {
   color: #c7d0d3;
   font-variant-numeric: tabular-nums;
 }
 
-.creator-credit {
-  color: rgba(237, 241, 242, 0.72);
-  letter-spacing: 0.04em;
-}
-
-.about-helper { margin-top: 10px; }
+.about-helper { margin-top: 12px; }
 .about-helper summary {
   width: max-content;
   max-width: 100%;
@@ -599,7 +607,8 @@ summary:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
   .weapon-table td { padding: 3px 4px; }
   .reroll-controls .button,
   .mode-buttons .button { flex: 1 1 135px; }
-  .project-footer { margin-top: 24px; padding-inline: 8px; }
+  .project-footer { margin-top: 30px; padding-inline: 8px; }
+  .creator-mark { width: 62px; margin-bottom: 14px; }
   .update-banner {
     right: 8px;
     bottom: 8px;

@@ -4,7 +4,7 @@ A fast, mobile-friendly setup helper for core and selected standard-board games 
 
 This is an unofficial fan-made setup helper and is not affiliated with Microsoft, Halo Studios or Mantic Games. It covers setup only; use the current official rules for gameplay, scoring and organised play.
 
-Created by **ColdFire & Rook**.
+<p align="center"><img src="creator-mark.png" alt="ColdFire & Rook" width="72"></p>
 
 ## Included scenarios
 

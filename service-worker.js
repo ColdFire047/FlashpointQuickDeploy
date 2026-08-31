@@ -1,4 +1,4 @@
-const CACHE_NAME = "flashpoint-quick-setup-v16";
+const CACHE_NAME = "flashpoint-quick-setup-v17";
 const APP_FILES = [
   "./",
   "./index.html",
@@ -9,6 +9,7 @@ const APP_FILES = [
   "./icon-512.png",
   "./icon-maskable-512.png",
   "./apple-touch-icon.png",
+  "./creator-mark.png",
   "./share-card.png",
   "./src/app.js",
   "./src/scenarios.js",

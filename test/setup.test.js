@@ -59,3 +59,16 @@ test("weapon marker assignment uses every marker exactly once", () => {
     assert.deepEqual(assignments.map(({ marker }) => marker).sort(), [...WEAPON_MARKERS].sort());
   }
 });
+
+test("strongholds keeps the original opposing corner deployments", () => {
+  const strongholds = SCENARIOS.find(({ id }) => id === "strongholds");
+
+  assert.deepEqual(
+    strongholds.deployment.red.map(coordinateKey).sort(),
+    ["1,1", "2,1", "3,1", "4,1", "1,2", "1,3", "1,4"].sort(),
+  );
+  assert.deepEqual(
+    strongholds.deployment.blue.map(coordinateKey).sort(),
+    ["5,8", "6,8", "7,8", "8,8", "8,5", "8,6", "8,7"].sort(),
+  );
+});

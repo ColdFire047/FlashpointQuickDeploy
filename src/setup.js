@@ -77,6 +77,12 @@ export function assignWeaponMarkers(scenario, random = Math.random) {
   }));
 }
 
+export function pickObjectiveOutcome(scenario, random = Math.random) {
+  const outcomes = scenario.objectiveSetup?.outcomes;
+  if (!outcomes?.length) return null;
+  return Math.floor(random() * outcomes.length);
+}
+
 export function pickScenario(currentId = null, random = Math.random) {
   const choices = SCENARIOS.filter((scenario) => scenario.id !== currentId);
   return choices[Math.floor(random() * choices.length)];
@@ -100,6 +106,11 @@ export function canRestoreSetup(snapshot, scenario) {
   const weaponLocations = new Set(scenario.weapons.map(coordinateKey));
   const savedWeaponLocations = new Set(snapshot.weaponMarkers.filter(isBoardCoordinate).map(coordinateKey));
   const savedMarkerRanges = new Set(snapshot.weaponMarkers.map(({ marker }) => marker));
+  const objectiveOutcomeIsValid = scenario.objectiveSetup
+    ? Number.isInteger(snapshot.objectiveOutcomeIndex)
+      && snapshot.objectiveOutcomeIndex >= 0
+      && snapshot.objectiveOutcomeIndex < scenario.objectiveSetup.outcomes.length
+    : snapshot.objectiveOutcomeIndex == null;
 
   const itemsAreValid = snapshot.items.every((item) => (
     isBoardCoordinate(item) && !blocked.has(coordinateKey(item))
@@ -115,5 +126,6 @@ export function canRestoreSetup(snapshot, scenario) {
     && savedItemLocations.size === snapshot.items.length
     && weaponsAreValid
     && savedWeaponLocations.size === scenario.weapons.length
-    && savedMarkerRanges.size === WEAPON_MARKERS.length;
+    && savedMarkerRanges.size === WEAPON_MARKERS.length
+    && objectiveOutcomeIsValid;
 }

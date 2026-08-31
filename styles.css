@@ -118,14 +118,13 @@ button { font: inherit; }
 .cell.weapon-spawn { box-shadow: inset 0 0 0 3px var(--gold); }
 
 .cell.weapon-spawn::after {
-  content: "";
+  content: "W";
   position: absolute;
   z-index: 0;
-  width: 44%;
-  aspect-ratio: 1;
-  background:
-    linear-gradient(45deg, transparent 44%, rgba(91, 116, 132, 0.34) 45% 55%, transparent 56%),
-    linear-gradient(-45deg, transparent 44%, rgba(91, 116, 132, 0.34) 45% 55%, transparent 56%);
+  color: rgba(255, 212, 0, 0.52);
+  font-size: clamp(0.82rem, 3vw, 1.15rem);
+  font-weight: 850;
+  line-height: 1;
   pointer-events: none;
 }
 
@@ -243,6 +242,8 @@ button { font: inherit; }
 
 .marker-objective.flag-blue,
 .marker-objective.flag-red,
+.marker-objective.bomb-blue,
+.marker-objective.bomb-red,
 .marker-station {
   color: #fff;
   border: 2px solid #10212d;
@@ -250,10 +251,19 @@ button { font: inherit; }
 }
 
 .marker-objective.flag-blue,
+.marker-objective.bomb-blue,
 .marker-station.station-blue { background: #3e86b8; }
 
 .marker-objective.flag-red,
+.marker-objective.bomb-red,
 .marker-station.station-red { background: #e64f3d; }
+
+.marker-objective.control-neutral {
+  color: #15232c;
+  background: #d5d9da;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.72);
+}
 
 .marker-zone {
   position: absolute;
@@ -335,6 +345,54 @@ button { font: inherit; }
 
 .hill-table tbody tr:nth-child(even) td:nth-child(even),
 .hill-table tbody tr:nth-child(odd) td:nth-child(odd) { background: #3a3f41; }
+
+.objective-roll {
+  width: max-content;
+  margin: 0 auto 7px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  color: #16191a;
+  background: var(--objective);
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.objective-table-wrap {
+  width: min(100%, 168px);
+  margin: 0 auto 7px;
+}
+
+.objective-table {
+  width: 100%;
+  border: 0;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-variant-numeric: tabular-nums;
+}
+
+.objective-table th,
+.objective-table td {
+  width: 33.333%;
+  padding: 4px 2px;
+  border: 0;
+  text-align: center;
+}
+
+.objective-table th {
+  color: var(--gold);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.objective-table td .coordinate { display: inline-block; }
+.objective-table td:nth-child(even) .coordinate { background: #3a3f41; }
+
+.objective-setup .button {
+  min-height: 38px;
+  margin-top: 5px;
+  padding: 7px 12px;
+  font-size: 0.82rem;
+}
 
 .coordinate-list {
   width: var(--coordinate-grid-width);
@@ -430,6 +488,18 @@ summary:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
   box-shadow: 0 0 16px rgba(255, 212, 0, 0.66);
 }
 
+.button-secondary {
+  color: var(--gold);
+  background: #182a39;
+  border-color: var(--gold);
+  box-shadow: inset 0 0 0 1px rgba(255, 212, 0, 0.22);
+}
+
+.button-secondary:hover {
+  background: #20384b;
+  box-shadow: 0 0 11px rgba(255, 212, 0, 0.25);
+}
+
 .reroll-controls,
 .mode-buttons {
   display: flex;
@@ -490,7 +560,7 @@ summary:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 
 .item-marker { color: #151b1e; background: var(--gold); }
 .weapon-marker {
-  color: #536b7b;
+  color: rgba(255, 212, 0, 0.72);
   background: var(--panel);
   box-shadow: inset 0 0 0 3px var(--gold);
 }

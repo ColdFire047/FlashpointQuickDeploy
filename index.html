@@ -66,6 +66,24 @@
           <p class="readout-note">After each round, A replaces the current active hill in the table.</p>
         </section>
 
+        <section id="objective-setup" class="readout objective-setup" aria-labelledby="objective-setup-heading" hidden>
+          <h2 id="objective-setup-heading"></h2>
+          <p id="objective-roll" class="objective-roll"></p>
+          <div class="objective-table-wrap">
+            <table class="objective-table">
+              <caption class="sr-only">Active objective coordinates</caption>
+              <thead>
+                <tr id="objective-labels"></tr>
+              </thead>
+              <tbody>
+                <tr id="objective-coordinates"></tr>
+              </tbody>
+            </table>
+          </div>
+          <button id="reroll-objectives" class="button button-secondary" type="button">Re-roll Control Zones</button>
+          <p id="objective-setup-note" class="readout-note"></p>
+        </section>
+
         <section class="readout" aria-labelledby="item-heading">
           <h2 id="item-heading">Item Spawn Locations</h2>
           <div id="item-coordinates" class="coordinate-list"></div>
@@ -76,7 +94,7 @@
           <h2 id="weapon-heading">Weapon Drop Markers</h2>
           <div class="weapon-table-wrap">
             <table class="weapon-table">
-              <caption class="sr-only">Weapon drop marker coordinates</caption>
+              <caption id="weapon-caption" class="sr-only">Weapon drop marker coordinates</caption>
               <thead>
                 <tr id="weapon-marker-ranges"></tr>
               </thead>
@@ -85,7 +103,7 @@
               </tbody>
             </table>
           </div>
-          <p class="readout-note">Marker ranges are shuffled onto the four fixed locations.</p>
+          <p id="weapon-note" class="readout-note">Marker ranges are shuffled onto the four fixed locations.</p>
         </section>
       </div>
 
@@ -105,7 +123,7 @@
       <summary>Map legend</summary>
       <div class="legend-items">
         <span><i class="legend-swatch item-marker">×</i> Item</span>
-        <span><i class="legend-swatch weapon-marker">×</i> Weapon drop</span>
+        <span><i class="legend-swatch weapon-marker">W</i> Weapon location</span>
         <span><i class="legend-swatch objective-marker">O</i> Objective</span>
         <span><i class="legend-swatch respawn-marker"></i> Respawn</span>
       </div>
@@ -114,7 +132,7 @@
     <footer class="project-footer">
       <img class="creator-mark" src="creator-mark.png" alt="ColdFire and Rook">
       <p class="footer-summary"><strong>Unofficial fan-made setup helper.</strong> Setup only.</p>
-      <p class="release-meta">App v2.1 · Scenario layouts: pre-v1.5 sources · v1.5 review pending</p>
+      <p class="release-meta">App v2.2 review · Scenario layouts: pre-v1.5 sources · v1.5 review pending</p>
       <details class="about-helper">
         <summary>Legal, rules &amp; installation</summary>
         <p>Not affiliated with Microsoft, Halo Studios or Mantic Games. Check the current official rules for gameplay and scoring.</p>

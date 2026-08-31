@@ -9,6 +9,7 @@ import {
   deploymentKeys,
   generateItems,
   keepLegalItems,
+  pickObjectiveOutcome,
   pickScenario,
 } from "../src/setup.js";
 
@@ -24,6 +25,7 @@ test("every scenario contains valid board coordinates and four weapon drops", ()
       ...scenario.respawns.red,
       ...scenario.objectives,
       ...scenario.zones.flatMap((zone) => zone.cells),
+      ...(scenario.objectiveSetup?.outcomes.flatMap((outcome) => outcome.objectives) ?? []),
     ];
 
     assert.equal(scenario.weapons.length, 4, `${scenario.name} should have four weapon drops`);
@@ -132,6 +134,75 @@ test("weapon marker assignment uses every marker exactly once", () => {
   }
 });
 
+test("Total Control uses one D8 result for three valid active zones", () => {
+  const scenario = SCENARIOS.find(({ id }) => id === "total-control");
+
+  assert.deepEqual(scenario.objectiveSetup.outcomes.map(({ roll }) => roll), WEAPON_MARKERS);
+  assert.equal(pickObjectiveOutcome(scenario, () => 0), 0);
+  assert.equal(pickObjectiveOutcome(scenario, () => 0.999999), 3);
+
+  scenario.objectiveSetup.outcomes.forEach((outcome) => {
+    assert.deepEqual(outcome.objectives.map(({ label }) => label), ["A", "B", "C"]);
+    assert.equal(uniqueKeys(outcome.objectives).size, 3);
+  });
+
+  assert.deepEqual(
+    scenario.objectiveSetup.outcomes.map((outcome) => outcome.objectives.map(coordinateKey)),
+    [
+      ["1,7", "5,5", "6,2"],
+      ["3,7", "4,4", "8,2"],
+      ["6,7", "6,4", "1,2"],
+      ["8,7", "3,5", "3,2"],
+    ],
+  );
+});
+
+test("new scenario layouts match the supplied setup maps", () => {
+  const expected = {
+    "total-control": {
+      blueDeployment: ["1,1", "2,1", "7,1", "8,1"],
+      redDeployment: ["1,8", "2,8", "7,8", "8,8"],
+      weapons: ["4,6", "7,5", "2,4", "5,3"],
+      blueRespawns: ["1,5", "8,5", "5,1"],
+      redRespawns: ["4,8", "1,4", "8,4"],
+    },
+    attrition: {
+      blueDeployment: ["7,8", "8,8", "8,7", "1,2", "1,1", "2,1"],
+      redDeployment: ["1,8", "2,8", "1,7", "8,2", "7,1", "8,1"],
+      weapons: ["3,6", "6,6", "3,3", "6,3"],
+      blueRespawns: ["5,8", "4,1"],
+      redRespawns: ["1,5", "8,4"],
+    },
+    vip: {
+      blueDeployment: ["3,8", "4,8", "5,8", "6,8", "4,7", "5,7"],
+      redDeployment: ["3,1", "4,1", "5,1", "6,1", "4,2", "5,2"],
+      weapons: ["2,5", "5,5", "4,4", "7,4"],
+      blueRespawns: ["5,8", "1,3", "8,2"],
+      redRespawns: ["1,7", "8,6", "4,1"],
+    },
+    assault: {
+      blueDeployment: ["3,8", "4,8", "5,8", "6,8", "4,7", "5,7"],
+      redDeployment: ["3,1", "4,1", "5,1", "6,1", "4,2", "5,2"],
+      weapons: ["2,5", "5,5", "4,4", "7,4"],
+      blueRespawns: ["1,7", "8,6", "1,5"],
+      redRespawns: ["8,4", "1,3", "8,2"],
+    },
+  };
+
+  Object.entries(expected).forEach(([id, layout]) => {
+    const scenario = SCENARIOS.find((entry) => entry.id === id);
+    assert.deepEqual(scenario.deployment.blue.map(coordinateKey).sort(), layout.blueDeployment.sort());
+    assert.deepEqual(scenario.deployment.red.map(coordinateKey).sort(), layout.redDeployment.sort());
+    assert.deepEqual(scenario.weapons.map(coordinateKey).sort(), layout.weapons.sort());
+    assert.deepEqual(scenario.respawns.blue.map(coordinateKey).sort(), layout.blueRespawns.sort());
+    assert.deepEqual(scenario.respawns.red.map(coordinateKey).sort(), layout.redRespawns.sort());
+  });
+
+  const assault = SCENARIOS.find(({ id }) => id === "assault");
+  assert.equal(assault.weaponMode, "tokens");
+  assert.deepEqual(assault.objectives.map(coordinateKey).sort(), ["4,6", "5,3"]);
+});
+
 test("strongholds keeps the original opposing corner deployments", () => {
   const strongholds = SCENARIOS.find(({ id }) => id === "strongholds");
 
@@ -154,6 +225,21 @@ test("a valid setup can be restored after an accidental refresh", () => {
   };
 
   assert.equal(canRestoreSetup(snapshot, scenario), true);
+});
+
+test("Total Control restores only a valid saved objective outcome", () => {
+  const scenario = SCENARIOS.find(({ id }) => id === "total-control");
+  const snapshot = {
+    scenarioId: scenario.id,
+    items: generateItems(scenario),
+    weaponMarkers: assignWeaponMarkers(scenario),
+    objectiveOutcomeIndex: 2,
+  };
+
+  assert.equal(canRestoreSetup(snapshot, scenario), true);
+  assert.equal(canRestoreSetup({ ...snapshot, objectiveOutcomeIndex: -1 }, scenario), false);
+  assert.equal(canRestoreSetup({ ...snapshot, objectiveOutcomeIndex: 4 }, scenario), false);
+  assert.equal(canRestoreSetup({ ...snapshot, objectiveOutcomeIndex: null }, scenario), false);
 });
 
 test("corrupt or outdated saved setups are rejected", () => {

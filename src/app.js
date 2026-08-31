@@ -6,6 +6,7 @@ import {
   countCoordinates,
   generateItems,
   keepLegalItems,
+  pickObjectiveOutcome,
   pickScenario,
 } from "./setup.js";
 
@@ -15,6 +16,7 @@ const state = {
   scenario: null,
   items: [],
   weaponMarkers: [],
+  objectiveOutcomeIndex: null,
 };
 
 const elements = {
@@ -28,14 +30,24 @@ const elements = {
   hillRoundOne: document.querySelector("#hill-round-one"),
   hillRollRanges: document.querySelector("#hill-roll-ranges"),
   hillRotationRows: document.querySelector("#hill-rotation-rows"),
+  objectiveSetup: document.querySelector("#objective-setup"),
+  objectiveSetupHeading: document.querySelector("#objective-setup-heading"),
+  objectiveRoll: document.querySelector("#objective-roll"),
+  objectiveLabels: document.querySelector("#objective-labels"),
+  objectiveCoordinates: document.querySelector("#objective-coordinates"),
+  objectiveSetupNote: document.querySelector("#objective-setup-note"),
   itemCoordinates: document.querySelector("#item-coordinates"),
+  weaponHeading: document.querySelector("#weapon-heading"),
+  weaponCaption: document.querySelector("#weapon-caption"),
   weaponMarkerRanges: document.querySelector("#weapon-marker-ranges"),
   weaponCoordinates: document.querySelector("#weapon-coordinates"),
+  weaponNote: document.querySelector("#weapon-note"),
   modeButtons: document.querySelector("#mode-buttons"),
   randomiseAll: document.querySelector("#randomise-all"),
   rerollScenario: document.querySelector("#reroll-scenario"),
   rerollItems: document.querySelector("#reroll-items"),
   rerollWeapons: document.querySelector("#reroll-weapons"),
+  rerollObjectives: document.querySelector("#reroll-objectives"),
   updateBanner: document.querySelector("#update-banner"),
   refreshApp: document.querySelector("#refresh-app"),
 };
@@ -68,14 +80,22 @@ function objectiveDescription(type) {
     seed: "Power Seed",
     "station-blue": "blue Power Seed station",
     "station-red": "red Power Seed station",
+    "control-neutral": "neutral Control Zone",
+    "bomb-blue": "blue Bomb",
+    "bomb-red": "red Bomb",
   };
   return descriptions[type] ?? "objective";
+}
+
+function activeObjectives() {
+  const outcome = state.scenario.objectiveSetup?.outcomes[state.objectiveOutcomeIndex];
+  return [...state.scenario.objectives, ...(outcome?.objectives ?? [])];
 }
 
 function renderBoard() {
   const { scenario, items } = state;
   const itemCounts = countCoordinates(items);
-  const objectiveByCoordinate = new Map(scenario.objectives.map((entry) => [coordinateKey(entry), entry]));
+  const objectiveByCoordinate = new Map(activeObjectives().map((entry) => [coordinateKey(entry), entry]));
   const zoneByCoordinate = new Map();
   const zoneAnchorByCoordinate = new Map();
 
@@ -176,8 +196,32 @@ function renderCoordinates() {
   });
   elements.itemCoordinates.replaceChildren(itemFragment);
 
-  const markerFragment = document.createDocumentFragment();
   const weaponFragment = document.createDocumentFragment();
+  const usesTokens = state.scenario.weaponMode === "tokens";
+
+  elements.weaponHeading.textContent = usesTokens ? "Weapon Token Locations" : "Weapon Drop Markers";
+  elements.weaponCaption.textContent = usesTokens ? "Weapon token coordinates" : "Weapon drop marker coordinates";
+  elements.weaponMarkerRanges.hidden = usesTokens;
+  elements.weaponNote.textContent = usesTokens
+    ? "Place one randomly selected Weapon token in each fixed location."
+    : "Marker ranges are shuffled onto the four fixed locations.";
+  elements.rerollWeapons.hidden = usesTokens;
+
+  if (usesTokens) {
+    state.scenario.weapons.forEach(({ x, y }) => {
+      const coordinateCell = document.createElement("td");
+      const coordinate = document.createElement("span");
+      coordinate.className = "coordinate";
+      coordinate.textContent = `${x},${y}`;
+      coordinateCell.append(coordinate);
+      weaponFragment.append(coordinateCell);
+    });
+    elements.weaponMarkerRanges.replaceChildren();
+    elements.weaponCoordinates.replaceChildren(weaponFragment);
+    return;
+  }
+
+  const markerFragment = document.createDocumentFragment();
   const weaponsByMarker = new Map(state.weaponMarkers.map((weapon) => [weapon.marker, weapon]));
 
   WEAPON_MARKERS.forEach((markerRange) => {
@@ -197,6 +241,36 @@ function renderCoordinates() {
 
   elements.weaponMarkerRanges.replaceChildren(markerFragment);
   elements.weaponCoordinates.replaceChildren(weaponFragment);
+}
+
+function renderObjectiveSetup() {
+  const setup = state.scenario.objectiveSetup;
+  elements.objectiveSetup.hidden = !setup;
+  if (!setup) return;
+
+  const outcome = setup.outcomes[state.objectiveOutcomeIndex];
+  elements.objectiveSetupHeading.textContent = setup.heading;
+  elements.objectiveRoll.textContent = `${setup.rollLabel}: ${outcome.roll}`;
+  elements.objectiveSetupNote.textContent = setup.note;
+
+  const labelFragment = document.createDocumentFragment();
+  const coordinateFragment = document.createDocumentFragment();
+  outcome.objectives.forEach(({ x, y, label }) => {
+    const labelCell = document.createElement("th");
+    labelCell.scope = "col";
+    labelCell.textContent = label;
+    labelFragment.append(labelCell);
+
+    const coordinateCell = document.createElement("td");
+    const coordinate = document.createElement("span");
+    coordinate.className = "coordinate";
+    coordinate.textContent = `${x},${y}`;
+    coordinateCell.append(coordinate);
+    coordinateFragment.append(coordinateCell);
+  });
+
+  elements.objectiveLabels.replaceChildren(labelFragment);
+  elements.objectiveCoordinates.replaceChildren(coordinateFragment);
 }
 
 function renderHillRotation() {
@@ -251,6 +325,7 @@ function render(statusMessage = "") {
   elements.scenarioNote.textContent = state.scenario.note;
   renderBoard();
   renderHillRotation();
+  renderObjectiveSetup();
   renderCoordinates();
 
   elements.modeButtons.querySelectorAll("button").forEach((button) => {
@@ -267,6 +342,7 @@ function saveSession() {
       scenarioId: state.scenario.id,
       items: state.items,
       weaponMarkers: state.weaponMarkers,
+      objectiveOutcomeIndex: state.objectiveOutcomeIndex,
     }));
   } catch {
     // Storage can be disabled without affecting the generator itself.
@@ -286,6 +362,7 @@ function restoreSession() {
     state.scenario = scenario;
     state.items = snapshot.items.map((item) => ({ ...item }));
     state.weaponMarkers = snapshot.weaponMarkers.map((weapon) => ({ ...weapon }));
+    state.objectiveOutcomeIndex = snapshot.objectiveOutcomeIndex ?? null;
     render(`${scenario.name} setup restored.`);
   } catch {
     try {
@@ -302,6 +379,7 @@ function startScenario(scenario, { keepItems = false } = {}) {
     ? keepLegalItems(state.items, scenario)
     : generateItems(scenario);
   state.weaponMarkers = assignWeaponMarkers(scenario);
+  state.objectiveOutcomeIndex = pickObjectiveOutcome(scenario);
   render(`${scenario.name} setup generated.`);
 }
 
@@ -329,6 +407,10 @@ elements.rerollItems.addEventListener("click", () => {
 elements.rerollWeapons.addEventListener("click", () => {
   state.weaponMarkers = assignWeaponMarkers(state.scenario);
   render("Weapon marker assignments reshuffled.");
+});
+elements.rerollObjectives.addEventListener("click", () => {
+  state.objectiveOutcomeIndex = pickObjectiveOutcome(state.scenario);
+  render("Control Zone positions rerolled.");
 });
 
 buildModeButtons();

@@ -1,4 +1,4 @@
-const CACHE_NAME = "flashpoint-quick-setup-v17";
+const CACHE_NAME = "flashpoint-quick-setup-v18";
 const APP_FILES = [
   "./",
   "./index.html",

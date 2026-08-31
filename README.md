@@ -14,8 +14,12 @@ This is an unofficial fan-made setup helper and is not affiliated with Microsoft
 - Strongholds
 - Stockpile
 - King of the Hill
+- Total Control
+- Attrition
+- VIP
+- Assault
 
-Big Team Battle scenarios are intentionally excluded because they use a different 16×8 battlefield and setup rules. Additional Organised Play and Husky variants are not yet included; their layouts should be verified against the current official scenario packet before they are added.
+Big Team Battle scenarios are intentionally excluded because they use a different 16×8 battlefield and setup rules. Additional standard-board variants should be verified against the current official scenario source before they are added.
 
 ## Rules handled by the generator
 
@@ -24,6 +28,8 @@ Big Team Battle scenarios are intentionally excluded because they use a differen
 - Unique Item cubes are a deliberate casual-play house rule; official independent dice rolls can produce duplicates.
 - The four Weapon Drop marker ranges are shuffled across the scenario's fixed weapon locations.
 - King of the Hill includes the Round 1 starting hill and the D8 lookup for every later hill change.
+- Total Control rolls and displays the three active Control Zone locations.
+- Assault displays its fixed Weapon token cubes without assigning numbered Weapon Drop markers.
 - Changing only the scenario keeps legal, unique Item coordinates and replaces any that become illegal or duplicated.
 - The current setup survives an accidental refresh in the same browser tab.
 
@@ -43,4 +49,4 @@ The public app currently labels its scenario layouts as checked against pre-v1.5
 
 ## Sources
 
-Core scenario layouts and Stockpile are based on the Halo: Flashpoint rulebook. King of the Hill uses the standard-board Organised Play scenario layout. Always use the latest official rules or scenario booklet for gameplay wording and victory conditions.
+Core scenario layouts and Stockpile are based on the Halo: Flashpoint rulebook. King of the Hill uses the standard-board Organised Play scenario layout. Total Control, Attrition, VIP and Assault use their Mantic app setup maps. The helper displays setup information only and does not reproduce their gameplay or victory-condition text. Always use the latest official rules or scenario source for gameplay wording and victory conditions.

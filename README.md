@@ -1,6 +1,6 @@
 # Flashpoint Quick Setup
 
-A fast, mobile-friendly setup helper for standard 8×8 games of Halo: Flashpoint. It chooses a scenario, generates the eight starting Item locations, shuffles the four numbered Weapon Drop markers and displays the complete setup on one board.
+A fast, mobile-friendly setup helper for core and selected standard-board games of Halo: Flashpoint. It chooses a scenario, generates the eight starting Item locations, shuffles the four numbered Weapon Drop markers and displays the complete setup on one board.
 
 ## Included scenarios
 
@@ -11,7 +11,7 @@ A fast, mobile-friendly setup helper for standard 8×8 games of Halo: Flashpoint
 - Stockpile
 - King of the Hill
 
-Big Team Battle scenarios are intentionally excluded because they use a different 16×8 battlefield and setup rules.
+Big Team Battle scenarios are intentionally excluded because they use a different 16×8 battlefield and setup rules. Additional Organised Play and Husky variants are not yet included; their layouts should be verified against the current official scenario packet before they are added.
 
 ## Rules handled by the generator
 
@@ -30,6 +30,8 @@ npm test
 ```
 
 Scenario layouts live in `src/scenarios.js`; setup logic lives in `src/setup.js`; rendering and interaction live in `src/app.js`.
+
+The local app shell is cached for offline use. The decorative Halo logo and circuit-board background are loaded from their existing external sources, so the generator remains functional offline but those two images may be absent.
 
 ## Sources
 

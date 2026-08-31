@@ -24,6 +24,10 @@ const elements = {
   scenarioNote: document.querySelector("#scenario-note"),
   updateStatus: document.querySelector("#update-status"),
   board: document.querySelector("#board"),
+  hillRotation: document.querySelector("#hill-rotation"),
+  hillRoundOne: document.querySelector("#hill-round-one"),
+  hillRollRanges: document.querySelector("#hill-roll-ranges"),
+  hillRotationRows: document.querySelector("#hill-rotation-rows"),
   itemCoordinates: document.querySelector("#item-coordinates"),
   weaponMarkerRanges: document.querySelector("#weapon-marker-ranges"),
   weaponCoordinates: document.querySelector("#weapon-coordinates"),
@@ -193,6 +197,46 @@ function renderCoordinates() {
   elements.weaponCoordinates.replaceChildren(weaponFragment);
 }
 
+function renderHillRotation() {
+  const rotation = state.scenario.hillRotation;
+  elements.hillRotation.hidden = !rotation;
+  if (!rotation) return;
+
+  elements.hillRoundOne.textContent = `Round 1: Hill ${rotation.initial}`;
+
+  const headerFragment = document.createDocumentFragment();
+  const currentHeading = document.createElement("th");
+  currentHeading.scope = "col";
+  currentHeading.textContent = "Current";
+  headerFragment.append(currentHeading);
+
+  rotation.rolls.forEach((roll) => {
+    const heading = document.createElement("th");
+    heading.scope = "col";
+    heading.textContent = roll;
+    headerFragment.append(heading);
+  });
+
+  const rowFragment = document.createDocumentFragment();
+  Object.entries(rotation.nextByCurrent).forEach(([current, nextHills]) => {
+    const row = document.createElement("tr");
+    const rowHeading = document.createElement("th");
+    rowHeading.scope = "row";
+    rowHeading.textContent = current;
+    row.append(rowHeading);
+
+    nextHills.forEach((nextHill) => {
+      const cell = document.createElement("td");
+      cell.textContent = nextHill;
+      row.append(cell);
+    });
+    rowFragment.append(row);
+  });
+
+  elements.hillRollRanges.replaceChildren(headerFragment);
+  elements.hillRotationRows.replaceChildren(rowFragment);
+}
+
 function announce(message) {
   if (!message) return;
   elements.updateStatus.textContent = "";
@@ -208,6 +252,7 @@ function render(statusMessage = "") {
   elements.scenarioName.textContent = state.scenario.name;
   elements.scenarioNote.textContent = state.scenario.note;
   renderBoard();
+  renderHillRotation();
   renderCoordinates();
 
   elements.modeButtons.querySelectorAll("button").forEach((button) => {

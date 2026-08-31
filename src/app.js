@@ -1,4 +1,4 @@
-import { SCENARIOS, SCENARIO_BY_ID } from "./scenarios.js";
+import { SCENARIOS, SCENARIO_BY_ID, WEAPON_MARKERS } from "./scenarios.js";
 import {
   assignWeaponMarkers,
   coordinateKey,
@@ -21,6 +21,7 @@ const elements = {
   scenarioNote: document.querySelector("#scenario-note"),
   board: document.querySelector("#board"),
   itemCoordinates: document.querySelector("#item-coordinates"),
+  weaponMarkerRanges: document.querySelector("#weapon-marker-ranges"),
   weaponCoordinates: document.querySelector("#weapon-coordinates"),
   modeButtons: document.querySelector("#mode-buttons"),
   randomiseAll: document.querySelector("#randomise-all"),
@@ -42,9 +43,8 @@ function marker(label, className, title) {
 }
 
 function renderBoard() {
-  const { scenario, items, weaponMarkers } = state;
+  const { scenario, items } = state;
   const itemCounts = countCoordinates(items);
-  const weaponByCoordinate = new Map(weaponMarkers.map((entry) => [coordinateKey(entry), entry]));
   const objectiveByCoordinate = new Map(scenario.objectives.map((entry) => [coordinateKey(entry), entry]));
   const zoneByCoordinate = new Map();
   const zoneAnchorByCoordinate = new Map();
@@ -85,9 +85,6 @@ function renderBoard() {
       const zoneLabel = zoneAnchorByCoordinate.get(key);
       if (zoneLabel) markers.append(marker(zoneLabel, "marker-zone", `Hill ${zoneLabel}`));
 
-      const weapon = weaponByCoordinate.get(key);
-      if (weapon) markers.append(marker(`W ${weapon.marker}`, "marker-weapon", `Weapon marker ${weapon.marker}`));
-
       const itemCount = itemCounts.get(key);
       if (itemCount) markers.append(marker(itemCount > 1 ? `×${itemCount}` : "×", "marker-item", `${itemCount} item${itemCount > 1 ? "s" : ""}`));
 
@@ -123,13 +120,23 @@ function renderCoordinates() {
   });
   elements.itemCoordinates.replaceChildren(itemFragment);
 
+  const markerFragment = document.createDocumentFragment();
   const weaponFragment = document.createDocumentFragment();
-  state.weaponMarkers.forEach(({ x, y, marker: markerRange }) => {
-    const coordinate = document.createElement("span");
-    coordinate.className = "coordinate";
-    coordinate.innerHTML = `<strong>${markerRange}</strong> → ${x},${y}`;
-    weaponFragment.append(coordinate);
+  const weaponsByMarker = new Map(state.weaponMarkers.map((weapon) => [weapon.marker, weapon]));
+
+  WEAPON_MARKERS.forEach((markerRange) => {
+    const { x, y } = weaponsByMarker.get(markerRange);
+    const markerCell = document.createElement("th");
+    const coordinateCell = document.createElement("td");
+
+    markerCell.scope = "col";
+    markerCell.textContent = markerRange;
+    coordinateCell.textContent = `${x},${y}`;
+    markerFragment.append(markerCell);
+    weaponFragment.append(coordinateCell);
   });
+
+  elements.weaponMarkerRanges.replaceChildren(markerFragment);
   elements.weaponCoordinates.replaceChildren(weaponFragment);
 }
 

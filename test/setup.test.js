@@ -71,24 +71,28 @@ test("every respawn location is on a board edge", () => {
 test("item generation never places an item in a deployment zone", () => {
   for (const scenario of SCENARIOS) {
     const blocked = deploymentKeys(scenario);
-    const items = generateItems(scenario, 500);
-    items.forEach((item) => assert.equal(blocked.has(coordinateKey(item)), false));
+    for (let roll = 0; roll < 500; roll += 1) {
+      const items = generateItems(scenario);
+      items.forEach((item) => assert.equal(blocked.has(coordinateKey(item)), false));
+      assert.equal(uniqueKeys(items).size, items.length);
+    }
   }
 });
 
-test("item generation permits multiple items in one cube", () => {
+test("item generation spreads all eight items across different cubes", () => {
   const slayer = SCENARIOS.find(({ id }) => id === "slayer");
   const items = generateItems(slayer, 8, () => 0);
-  assert.deepEqual(items, Array.from({ length: 8 }, () => ({ x: 1, y: 1 })));
+  assert.equal(uniqueKeys(items).size, 8);
 });
 
 test("changing scenario keeps legal items and replaces illegal ones", () => {
   const captureTheFlag = SCENARIOS.find(({ id }) => id === "capture-the-flag");
-  const items = [{ x: 1, y: 8 }, { x: 4, y: 4 }];
+  const items = [{ x: 1, y: 8 }, { x: 4, y: 4 }, { x: 4, y: 4 }];
   const result = keepLegalItems(items, captureTheFlag, () => 0.5);
   assert.notDeepEqual(result[0], items[0]);
   assert.deepEqual(result[1], items[1]);
   assert.equal(deploymentKeys(captureTheFlag).has(coordinateKey(result[0])), false);
+  assert.equal(uniqueKeys(result).size, result.length);
 });
 
 test("scenario rerolls always choose a different scenario", () => {
@@ -140,6 +144,10 @@ test("corrupt or outdated saved setups are rejected", () => {
 
   assert.equal(canRestoreSetup({ ...snapshot, scenarioId: "unknown" }, scenario), false);
   assert.equal(canRestoreSetup({ ...snapshot, items: [{ x: 0, y: 9 }] }, scenario), false);
+  assert.equal(canRestoreSetup({
+    ...snapshot,
+    items: snapshot.items.map(() => snapshot.items[0]),
+  }, scenario), false);
   assert.equal(canRestoreSetup({
     ...snapshot,
     weaponMarkers: snapshot.weaponMarkers.map((weapon) => ({ ...weapon, marker: "1–2" })),

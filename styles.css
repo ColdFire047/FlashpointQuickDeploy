@@ -146,12 +146,6 @@ button { font: inherit; }
   box-shadow: 0 0 8px rgba(255, 212, 0, 0.45);
 }
 
-.marker-weapon {
-  color: var(--gold-soft);
-  border: 2px solid var(--gold);
-  background: rgba(18, 35, 48, 0.9);
-}
-
 .marker-objective,
 .marker-zone {
   color: #16191a;
@@ -197,6 +191,40 @@ button { font: inherit; }
 
 .coordinate:nth-child(even) { background: #3a3f41; }
 .coordinate strong { color: var(--gold); }
+
+.weapon-table-wrap {
+  width: min(100%, 520px);
+  margin: 0 auto;
+  overflow-x: auto;
+}
+
+.weapon-table {
+  width: 100%;
+  border: 0;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-variant-numeric: tabular-nums;
+}
+
+.weapon-table th,
+.weapon-table td {
+  width: 25%;
+  padding: 4px 8px;
+  border: 0;
+  text-align: center;
+}
+
+.weapon-table th {
+  color: var(--gold);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.weapon-table td {
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 650;
+}
 
 .readout-note {
   margin: 7px 0 0;
@@ -292,7 +320,6 @@ summary:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 }
 
 .item-marker { color: #151b1e; background: var(--gold); }
-.weapon-marker { color: var(--gold); border: 2px solid var(--gold); }
 .objective-marker { color: #151b1e; background: var(--objective); border-radius: 50%; }
 .respawn-marker { color: #74bff2; }
 
@@ -321,6 +348,8 @@ summary:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
   .marker { min-width: 15px; min-height: 15px; padding: 1px 2px; }
   .coordinate-list { gap: 5px; }
   .coordinate { min-width: 42px; padding: 5px 6px; font-size: 0.88rem; }
+  .weapon-table th,
+  .weapon-table td { padding: 3px 4px; }
   .reroll-controls .button,
   .mode-buttons .button { flex: 1 1 135px; }
 }

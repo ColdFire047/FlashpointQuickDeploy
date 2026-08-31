@@ -216,8 +216,8 @@ export const SCENARIOS = [
     name: "Assault",
     note: "Carry your Bomb into the enemy deployment zone and arm it.",
     deployment: {
-      blue: [...row(8, 3, 6), ...row(7, 4, 5)],
-      red: [...row(1, 3, 6), ...row(2, 4, 5)],
+      blue: [...row(8, 3, 6), ...row(7, 3, 6)],
+      red: [...row(1, 3, 6), ...row(2, 3, 6)],
     },
     weapons: cells([2, 5], [5, 5], [4, 4], [7, 4]),
     weaponMode: "tokens",

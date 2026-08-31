@@ -181,8 +181,8 @@ test("new scenario layouts match the supplied setup maps", () => {
       redRespawns: ["1,7", "8,6", "4,1"],
     },
     assault: {
-      blueDeployment: ["3,8", "4,8", "5,8", "6,8", "4,7", "5,7"],
-      redDeployment: ["3,1", "4,1", "5,1", "6,1", "4,2", "5,2"],
+      blueDeployment: ["3,8", "4,8", "5,8", "6,8", "3,7", "4,7", "5,7", "6,7"],
+      redDeployment: ["3,1", "4,1", "5,1", "6,1", "3,2", "4,2", "5,2", "6,2"],
       weapons: ["2,5", "5,5", "4,4", "7,4"],
       blueRespawns: ["1,7", "8,6", "1,5"],
       redRespawns: ["8,4", "1,3", "8,2"],

@@ -2,6 +2,18 @@ import { SCENARIOS, WEAPON_MARKERS } from "./scenarios.js";
 
 export const coordinateKey = ({ x, y }) => `${x},${y}`;
 
+export function isBoardCoordinate(coordinate) {
+  return Boolean(
+    coordinate
+    && Number.isInteger(coordinate.x)
+    && Number.isInteger(coordinate.y)
+    && coordinate.x >= 1
+    && coordinate.x <= 8
+    && coordinate.y >= 1
+    && coordinate.y <= 8,
+  );
+}
+
 export function shuffle(values, random = Math.random) {
   const result = [...values];
   for (let index = result.length - 1; index > 0; index -= 1) {
@@ -63,4 +75,29 @@ export function countCoordinates(coordinates) {
     counts.set(key, (counts.get(key) ?? 0) + 1);
   }
   return counts;
+}
+
+export function canRestoreSetup(snapshot, scenario) {
+  if (!snapshot || snapshot.scenarioId !== scenario?.id) return false;
+  if (!Array.isArray(snapshot.items) || snapshot.items.length !== 8) return false;
+  if (!Array.isArray(snapshot.weaponMarkers) || snapshot.weaponMarkers.length !== WEAPON_MARKERS.length) return false;
+
+  const blocked = deploymentKeys(scenario);
+  const weaponLocations = new Set(scenario.weapons.map(coordinateKey));
+  const savedWeaponLocations = new Set(snapshot.weaponMarkers.map(coordinateKey));
+  const savedMarkerRanges = new Set(snapshot.weaponMarkers.map(({ marker }) => marker));
+
+  const itemsAreValid = snapshot.items.every((item) => (
+    isBoardCoordinate(item) && !blocked.has(coordinateKey(item))
+  ));
+  const weaponsAreValid = snapshot.weaponMarkers.every((weapon) => (
+    isBoardCoordinate(weapon)
+    && weaponLocations.has(coordinateKey(weapon))
+    && WEAPON_MARKERS.includes(weapon.marker)
+  ));
+
+  return itemsAreValid
+    && weaponsAreValid
+    && savedWeaponLocations.size === scenario.weapons.length
+    && savedMarkerRanges.size === WEAPON_MARKERS.length;
 }

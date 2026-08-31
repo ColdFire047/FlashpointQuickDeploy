@@ -24,8 +24,10 @@ body {
   color: var(--text);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: var(--page);
-  background-image: linear-gradient(rgba(45, 47, 47, 0.91), rgba(45, 47, 47, 0.91)), url("https://haloflashpoint.manticgames.com/res/public/img/circuit-board-gak.png");
+  background-image: url("https://haloflashpoint.manticgames.com/res/public/img/circuit-board-gak.png");
   background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
   background-attachment: fixed;
 }
 
@@ -306,8 +308,6 @@ summary:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
   background: #eabd00;
   box-shadow: 0 0 16px rgba(255, 212, 0, 0.66);
 }
-
-.button-secondary { color: var(--gold); background: transparent; border-color: var(--gold); }
 
 .reroll-controls,
 .mode-buttons {

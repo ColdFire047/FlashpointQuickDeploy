@@ -41,7 +41,17 @@
 
         <section class="readout" aria-labelledby="weapon-heading">
           <h2 id="weapon-heading">Weapon Drop Markers</h2>
-          <div id="weapon-coordinates" class="coordinate-list"></div>
+          <div class="weapon-table-wrap">
+            <table class="weapon-table">
+              <caption class="sr-only">Weapon drop marker coordinates</caption>
+              <thead>
+                <tr id="weapon-marker-ranges"></tr>
+              </thead>
+              <tbody>
+                <tr id="weapon-coordinates"></tr>
+              </tbody>
+            </table>
+          </div>
           <p class="readout-note">Marker ranges are shuffled onto the four fixed locations.</p>
         </section>
       </div>
@@ -62,7 +72,6 @@
       <summary>Map legend</summary>
       <div class="legend-items">
         <span><i class="legend-swatch item-marker">×</i> Item</span>
-        <span><i class="legend-swatch weapon-marker">W</i> Weapon drop</span>
         <span><i class="legend-swatch objective-marker">O</i> Objective</span>
         <span><i class="legend-swatch respawn-marker">◆</i> Respawn</span>
       </div>

@@ -62,8 +62,8 @@ export const SCENARIOS = [
     name: "Strongholds",
     note: "Control the three static objectives to score.",
     deployment: {
-      red: [...row(8, 1, 4), ...column(1, 5, 7)],
-      blue: [...row(1, 5, 8), ...column(8, 2, 4)],
+      red: [...row(1, 1, 4), ...column(1, 2, 4)],
+      blue: [...row(8, 5, 8), ...column(8, 5, 7)],
     },
     weapons: cells([2, 6], [3, 7], [5, 3], [6, 4]),
     respawns: {

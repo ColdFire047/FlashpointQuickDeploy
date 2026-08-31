@@ -42,6 +42,14 @@ function marker(label, className, title) {
   return element;
 }
 
+function respawnEdgeClass(x, y) {
+  if (y === 8) return "edge-top";
+  if (y === 1) return "edge-bottom";
+  if (x === 1) return "edge-left";
+  if (x === 8) return "edge-right";
+  return "edge-centre";
+}
+
 function renderBoard() {
   const { scenario, items } = state;
   const itemCounts = countCoordinates(items);
@@ -72,6 +80,17 @@ function renderBoard() {
       if (hasCoordinate(scenario.deployment.blue, x, y)) cell.classList.add("deployment-blue");
       if (hasCoordinate(scenario.deployment.red, x, y)) cell.classList.add("deployment-red");
       if (zoneByCoordinate.has(key)) cell.classList.add("zone-cell");
+      if (hasCoordinate(scenario.weapons, x, y)) cell.classList.add("weapon-spawn");
+
+      for (const team of ["blue", "red"]) {
+        if (hasCoordinate(scenario.respawns[team], x, y)) {
+          const respawn = document.createElement("span");
+          respawn.className = `respawn-edge ${team} ${respawnEdgeClass(x, y)}`;
+          respawn.setAttribute("aria-hidden", "true");
+          cell.setAttribute("aria-label", `Cube ${key}; ${team} respawn`);
+          cell.append(respawn);
+        }
+      }
 
       const markers = document.createElement("div");
       markers.className = "cell-markers";
@@ -87,12 +106,6 @@ function renderBoard() {
 
       const itemCount = itemCounts.get(key);
       if (itemCount) markers.append(marker(itemCount > 1 ? `×${itemCount}` : "×", "marker-item", `${itemCount} item${itemCount > 1 ? "s" : ""}`));
-
-      for (const team of ["blue", "red"]) {
-        if (hasCoordinate(scenario.respawns[team], x, y)) {
-          markers.append(marker("◆", `marker-respawn ${team}`, `${team} respawn`));
-        }
-      }
 
       cell.append(markers);
       fragment.append(cell);
@@ -131,7 +144,10 @@ function renderCoordinates() {
 
     markerCell.scope = "col";
     markerCell.textContent = markerRange;
-    coordinateCell.textContent = `${x},${y}`;
+    const coordinate = document.createElement("span");
+    coordinate.className = "coordinate";
+    coordinate.textContent = `${x},${y}`;
+    coordinateCell.append(coordinate);
     markerFragment.append(markerCell);
     weaponFragment.append(coordinateCell);
   });

@@ -117,9 +117,9 @@ export const SCENARIOS = [
       nextByCurrent: {
         A: ["B", "C", "D", "E"],
         B: ["A", "C", "D", "E"],
-        C: ["A", "B", "D", "E"],
-        D: ["A", "B", "C", "E"],
-        E: ["A", "B", "C", "D"],
+        C: ["B", "A", "D", "E"],
+        D: ["B", "C", "A", "E"],
+        E: ["B", "C", "D", "A"],
       },
     },
     zones: [

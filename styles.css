@@ -277,6 +277,65 @@ button { font: inherit; }
   font-size: clamp(1.2rem, 4vw, 1.55rem);
 }
 
+.hill-rotation { margin-bottom: 2px; }
+
+.hill-round-one {
+  width: max-content;
+  margin: 0 auto 7px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  color: #16191a;
+  background: var(--objective);
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.hill-table-wrap {
+  width: min(100%, 294px);
+  margin: 0 auto;
+  overflow-x: auto;
+}
+
+.hill-table {
+  width: 100%;
+  border: 0;
+  border-collapse: separate;
+  border-spacing: 4px;
+  table-layout: fixed;
+  font-variant-numeric: tabular-nums;
+}
+
+.hill-table th,
+.hill-table td {
+  height: 31px;
+  padding: 4px 3px;
+  border: 0;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.hill-table thead th {
+  color: var(--gold);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.hill-table tbody th {
+  color: #16191a;
+  background: var(--objective);
+  font-weight: 850;
+}
+
+.hill-table td {
+  color: var(--text);
+  background: #292d2f;
+  font-size: 0.9rem;
+  font-weight: 750;
+}
+
+.hill-table tbody tr:nth-child(even) td:nth-child(even),
+.hill-table tbody tr:nth-child(odd) td:nth-child(odd) { background: #3a3f41; }
+
 .coordinate-list {
   width: var(--coordinate-grid-width);
   display: grid;

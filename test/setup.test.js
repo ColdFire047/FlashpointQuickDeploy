@@ -53,8 +53,11 @@ test("hill zones contain four unique cubes and their label anchor", () => {
   for (const scenario of SCENARIOS) {
     for (const zone of scenario.zones) {
       const zoneKeys = uniqueKeys(zone.cells);
+      const left = Math.min(...zone.cells.map(({ x }) => x));
+      const top = Math.max(...zone.cells.map(({ y }) => y));
       assert.equal(zoneKeys.size, 4, `${scenario.name} Hill ${zone.label} should be 2×2`);
       assert.equal(zoneKeys.has(coordinateKey(zone.anchor)), true, `${scenario.name} Hill ${zone.label} label is outside its zone`);
+      assert.deepEqual(zone.anchor, { x: left, y: top }, `${scenario.name} Hill ${zone.label} anchor should be its top-left cube`);
     }
   }
 });

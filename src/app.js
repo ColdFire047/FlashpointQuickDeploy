@@ -22,6 +22,7 @@ const elements = {
   setup: document.querySelector("#setup"),
   scenarioName: document.querySelector("#scenario-name"),
   scenarioNote: document.querySelector("#scenario-note"),
+  updateStatus: document.querySelector("#update-status"),
   board: document.querySelector("#board"),
   itemCoordinates: document.querySelector("#item-coordinates"),
   weaponMarkerRanges: document.querySelector("#weapon-marker-ranges"),
@@ -192,7 +193,15 @@ function renderCoordinates() {
   elements.weaponCoordinates.replaceChildren(weaponFragment);
 }
 
-function render() {
+function announce(message) {
+  if (!message) return;
+  elements.updateStatus.textContent = "";
+  requestAnimationFrame(() => {
+    elements.updateStatus.textContent = message;
+  });
+}
+
+function render(statusMessage = "") {
   if (!state.scenario) return;
   elements.welcome.hidden = true;
   elements.setup.hidden = false;
@@ -206,6 +215,7 @@ function render() {
   });
 
   saveSession();
+  announce(statusMessage);
 }
 
 function saveSession() {
@@ -233,7 +243,7 @@ function restoreSession() {
     state.scenario = scenario;
     state.items = snapshot.items.map((item) => ({ ...item }));
     state.weaponMarkers = snapshot.weaponMarkers.map((weapon) => ({ ...weapon }));
-    render();
+    render(`${scenario.name} setup restored.`);
   } catch {
     try {
       sessionStorage.removeItem(SESSION_KEY);
@@ -249,7 +259,7 @@ function startScenario(scenario, { keepItems = false } = {}) {
     ? keepLegalItems(state.items, scenario)
     : generateItems(scenario);
   state.weaponMarkers = assignWeaponMarkers(scenario);
-  render();
+  render(`${scenario.name} setup generated.`);
 }
 
 function buildModeButtons() {
@@ -271,11 +281,11 @@ elements.randomiseAll.addEventListener("click", () => startScenario(pickScenario
 elements.rerollScenario.addEventListener("click", () => startScenario(pickScenario(state.scenario.id), { keepItems: true }));
 elements.rerollItems.addEventListener("click", () => {
   state.items = generateItems(state.scenario);
-  render();
+  render("Item locations rerolled.");
 });
 elements.rerollWeapons.addEventListener("click", () => {
   state.weaponMarkers = assignWeaponMarkers(state.scenario);
-  render();
+  render("Weapon marker assignments reshuffled.");
 });
 
 buildModeButtons();

@@ -24,12 +24,14 @@
       </button>
     </section>
 
-    <section id="setup" class="setup" aria-live="polite" hidden>
+    <section id="setup" class="setup" hidden>
       <div class="scenario-heading">
         <span class="eyebrow">Scenario</span>
         <h1 id="scenario-name"></h1>
         <p id="scenario-note"></p>
       </div>
+
+      <p id="update-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
 
       <div id="board" class="board" role="grid" aria-label="8 by 8 scenario map"></div>
 

@@ -62,6 +62,24 @@ test("hill zones contain four unique cubes and their label anchor", () => {
   }
 });
 
+test("hill rotation offers every other hill exactly once for each current hill", () => {
+  const scenario = SCENARIOS.find(({ id }) => id === "king-of-the-hill");
+  const hillLabels = scenario.zones.map(({ label }) => label);
+  const rotation = scenario.hillRotation;
+
+  assert.equal(hillLabels.includes(rotation.initial), true);
+  assert.equal(rotation.rolls.length, hillLabels.length - 1);
+  assert.deepEqual(Object.keys(rotation.nextByCurrent), hillLabels);
+
+  hillLabels.forEach((current) => {
+    const nextHills = rotation.nextByCurrent[current];
+    assert.equal(nextHills.length, hillLabels.length - 1);
+    assert.equal(new Set(nextHills).size, nextHills.length);
+    assert.equal(nextHills.includes(current), false);
+    assert.deepEqual([...nextHills].sort(), hillLabels.filter((label) => label !== current).sort());
+  });
+});
+
 test("every respawn location is on a board edge", () => {
   for (const scenario of SCENARIOS) {
     const respawns = [...scenario.respawns.blue, ...scenario.respawns.red];

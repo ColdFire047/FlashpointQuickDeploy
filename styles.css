@@ -1,0 +1,330 @@
+:root {
+  --page: #2d2f2f;
+  --panel: #192b3a;
+  --grid-line: #4c5559;
+  --text: #edf1f2;
+  --muted: #aeb8bc;
+  --gold: #ffd400;
+  --gold-soft: #fff38b;
+  --blue: #4b8dbd;
+  --red: #ff624c;
+  --objective: #f7df47;
+  --cell-size: clamp(34px, 7.4vw, 55px);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+html { min-height: 100%; background: var(--page); }
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  color: var(--text);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--page);
+  background-image: linear-gradient(rgba(45, 47, 47, 0.91), rgba(45, 47, 47, 0.91)), url("https://haloflashpoint.manticgames.com/res/public/img/circuit-board-gak.png");
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+button { font: inherit; }
+
+.app-shell {
+  width: min(100%, 760px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 28px 16px 36px;
+  text-align: center;
+}
+
+.brand { margin-bottom: 14px; }
+
+.brand-logo {
+  display: block;
+  width: min(460px, 72vw);
+  height: auto;
+  margin: 0 auto;
+}
+
+.brand p {
+  margin: -4px 0 0;
+  font-size: clamp(2rem, 8vw, 3.8rem);
+  font-weight: 650;
+  line-height: 1;
+  background: linear-gradient(to top, #cbd0d2, #fff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.welcome { min-height: 170px; display: grid; place-items: center; }
+.setup[hidden] { display: none; }
+.scenario-heading { margin: 20px 0 18px; }
+
+.eyebrow {
+  display: block;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.scenario-heading h1 {
+  margin: 3px 0;
+  color: var(--gold);
+  font-size: clamp(1.6rem, 6vw, 2.35rem);
+  line-height: 1.1;
+}
+
+.scenario-heading p {
+  max-width: 580px;
+  margin: 8px auto 0;
+  color: var(--muted);
+  font-size: 0.93rem;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: 24px repeat(8, var(--cell-size));
+  grid-template-rows: repeat(8, var(--cell-size)) 24px;
+  justify-content: center;
+  margin: 0 auto 22px;
+  user-select: none;
+}
+
+.cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  border: 1px solid var(--grid-line);
+  background: var(--panel);
+  overflow: visible;
+}
+
+.cell.deployment-blue { background: #4b8dbd; }
+.cell.deployment-red { background: #ff624c; }
+
+.axis-label {
+  display: grid;
+  place-items: center;
+  color: var(--gold);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.cell-markers {
+  position: absolute;
+  inset: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2px;
+  pointer-events: none;
+}
+
+.marker {
+  min-width: 18px;
+  min-height: 18px;
+  display: inline-grid;
+  place-items: center;
+  padding: 1px 3px;
+  border-radius: 4px;
+  font-size: clamp(0.65rem, 2.4vw, 0.84rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.marker-item {
+  color: #151b1e;
+  background: var(--gold);
+  box-shadow: 0 0 8px rgba(255, 212, 0, 0.45);
+}
+
+.marker-weapon {
+  color: var(--gold-soft);
+  border: 2px solid var(--gold);
+  background: rgba(18, 35, 48, 0.9);
+}
+
+.marker-objective,
+.marker-zone {
+  color: #16191a;
+  background: var(--objective);
+  border-radius: 50%;
+}
+
+.marker-station { color: #fff; background: #5f3c9b; }
+
+.marker-respawn {
+  color: #fff;
+  background: transparent;
+  font-size: 1rem;
+  text-shadow: 0 1px 3px #000;
+}
+
+.marker-respawn.blue { color: #74bff2; }
+.marker-respawn.red { color: #ff7e6d; }
+
+.readouts { display: grid; gap: 18px; }
+
+.readout h2 {
+  margin: 0 0 8px;
+  color: var(--gold);
+  font-size: clamp(1.2rem, 4vw, 1.55rem);
+}
+
+.coordinate-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.coordinate {
+  min-width: 48px;
+  padding: 6px 9px;
+  border-radius: 6px;
+  color: var(--text);
+  background: #292d2f;
+  font-variant-numeric: tabular-nums;
+}
+
+.coordinate:nth-child(even) { background: #3a3f41; }
+.coordinate strong { color: var(--gold); }
+
+.readout-note {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.button {
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+}
+
+.button:hover { transform: translateY(-1px); }
+.button:active { transform: translateY(0); }
+
+.button:focus-visible,
+summary:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+.button-primary {
+  color: #0a1e39;
+  background: var(--gold);
+  box-shadow: 0 0 11px rgba(255, 212, 0, 0.48);
+}
+
+.button-primary:hover {
+  background: #eabd00;
+  box-shadow: 0 0 16px rgba(255, 212, 0, 0.66);
+}
+
+.button-secondary { color: var(--gold); background: transparent; border-color: var(--gold); }
+
+.reroll-controls,
+.mode-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 9px;
+}
+
+.reroll-controls { margin-top: 22px; }
+.mode-picker { margin-top: 26px; }
+
+.mode-picker > p {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.mode-buttons .button { min-width: 118px; }
+
+.mode-buttons .button[aria-pressed="true"] {
+  color: var(--gold);
+  background: #182a39;
+  border-color: var(--gold);
+  box-shadow: inset 0 0 0 1px var(--gold), 0 0 11px rgba(255, 212, 0, 0.25);
+}
+
+.legend {
+  width: min(100%, 570px);
+  margin: 24px auto 0;
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.legend summary { cursor: pointer; }
+
+.legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.legend-items span { display: flex; align-items: center; gap: 5px; }
+
+.legend-swatch {
+  width: 22px;
+  height: 22px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 4px;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.item-marker { color: #151b1e; background: var(--gold); }
+.weapon-marker { color: var(--gold); border: 2px solid var(--gold); }
+.objective-marker { color: #151b1e; background: var(--objective); border-radius: 50%; }
+.respawn-marker { color: #74bff2; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 520px) {
+  .app-shell { padding: 18px 8px 28px; }
+  .brand { margin-bottom: 8px; }
+  .brand p { font-size: 2rem; }
+  .welcome { min-height: 130px; }
+  .board {
+    grid-template-columns: 20px repeat(8, var(--cell-size));
+    grid-template-rows: repeat(8, var(--cell-size)) 20px;
+  }
+  .axis-label { font-size: 0.72rem; }
+  .marker { min-width: 15px; min-height: 15px; padding: 1px 2px; }
+  .coordinate-list { gap: 5px; }
+  .coordinate { min-width: 42px; padding: 5px 6px; font-size: 0.88rem; }
+  .reroll-controls .button,
+  .mode-buttons .button { flex: 1 1 135px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+}

@@ -1,697 +1,75 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-/* Body styles */
-body {
-background-color: #313131;
-background-image: url('https://haloflashpoint.manticgames.com/res/public/img/circuit-board-gak.png');
-background-size: cover;
-background-repeat: no-repeat;
-color: #d0d0d0;
-font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-text-align: center;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-height: 100vh;
-margin: 0;
-position: relative;
-padding-top: 50px; /* Padding above the Halo logo */
-}
-/* Container styles */
-.container {
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 5px;
-padding-top: 20px;
-}
-/* Heading 1 styles */
-h1 {
-margin-top: 20px;
-margin-bottom: 5px;
-line-height: 1;
-}
-/* Logo styles */
-.logo {
-width: 50%;
-margin-bottom: -5px;
-}
-/* Subtitle styles with gradient text */
-.subtitle {
-display: block;
-text-align: center;
-background: linear-gradient(to top, #d0d0d0, #ffffff);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-font-size: 2em;
-font-weight: bold;
-}
-/* Responsive adjustments for subtitle */
-@media only screen and (max-width: 600px) {
-.subtitle {
-font-size: 1.5em;
-}
-}
-/* Scenario heading styles */
-.scenario-heading {
-font-size: 2em;
-font-weight: bold;
-color: #ffd700;
-margin: 10px 0;
-}
-/* Item spawn styles */
-.item-spawn {
-font-size: 1.5em;
-font-weight: bold;
-margin-bottom: 5px;
-margin-top: 5px;
-color: #ffd700;
-}
-/* Weapon spawn heading styles */
-.weapon-spawn-heading {
-margin-top: 5px;
-}
-/* Table styles */
-table {
-border-collapse: collapse;
-text-align: center;
-vertical-align: middle;
-table-layout: fixed;
-width: 400px;
-overflow: hidden;
-margin-left: -30px;
-margin-top: 5px;
-margin-bottom: 5px;
-}
-/* Table cell styles */
-th, td {
-border: 2px solid #4c4c4c;
-width: 50px;
-height: 50px;
-color: #ffd700;
-background-color: #1a2a3a;
-transition: background-color 0.3s, color 0.3s;
-}
-/* Header cell styles */
-.header-cell {
-border: none;
-background-color: transparent;
-}
-/* Cell hover effects */
-th:hover:not(.header-cell), td:hover:not(.header-cell):not(.last-row) {
-background-color: #2b3b4c;
-color: #ffff99;
-}
-/* Last row hover effects */
-.last-row td:hover {
-background-color: #1a2a3a;
-color: #ffd700;
-}
-/* Coordinates container */
-.coordinates {
-display: flex;
-justify-content: center;
-gap: 10px;
-margin-bottom: 5px;
-}
-/* Coordinates box styles */
-.coordinates div {
-padding: 5px 10px;
-border-radius: 5px;
-transition: background-color 0.3s;
-}
-/* ABAB/BABA Pattern Colors */
-.coordinates .color-a { background-color: #2b2b2b; } /* Color A */
-.coordinates .color-b { background-color: #3d3d3d; } /* Color B */
-/* Hover effect for coordinates */
-.coordinates div:hover { background-color: #505050; }
-/* Button styles */
-button {
-width: auto;
-padding: 10px 20px;
-background-color: #ffd700;
-color: #0a1e39;
-font-weight: bold;
-border: none;
-border-radius: 10px;
-box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-margin: 5px auto;
-display: inline-block;
-transition: background-color 0.3s, box-shadow 0.3s;
-}
-/* Button hover effects */
-button:hover {
-background-color: #e6b800;
-box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
-}
-/* Button container styles */
-.button-container {
-display: flex;
-gap: 10px;
-justify-content: center;
-margin-top: 10px;
-}
-/* Hidden game mode buttons */
-.game-mode-buttons {
-display: flex;
-flex-wrap: wrap;
-gap: 10px;
-margin-top: 10px;
-}
-/* Individual game mode button styles */
-.game-mode-buttons button {
-width: 120px;
-}
-/* Weapon spawn cell border */
-.weapon-spawn {
-border: 3px solid gold;
-}
-/* Responsive adjustments */
-@media only screen and (max-width: 600px) {
-th, td { width: 30px; height: 30px; }
-table { width: 240px; }
-.scenario-heading { font-size: 1.5em; }
-.item-spawn { font-size: 1.2em; }
-.coordinates { gap: 20px; margin-bottom: 10px; }
-button { bottom: 10px; padding: 10px; }
-}
-        /* Respawn point styles */
-/* Respawn point styles */
-.respawn-point {
-    position: relative;
-    border: 0px solid white; /* White border for visibility */
-    background-color: #1a2a3a; /* Default background color for non-Stronghold modes */
-}
-
-/* Triangle design using ::before pseudo-element */
-.respawn-point::before {
-    content: ''; /* Required for pseudo-element */
-    position: absolute;
-    top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
-    width: 30px; /* Width of the bounding box */
-    height: 30px; /* Height of the bounding box */
-    background-color: var(--respawn-color, #ffffff); /* Default to white */
-    clip-path: polygon(50% 60%, 0% 100%, 100% 100%); /* Triangle pointing down */
-    transform: translate(-50%, -50%) rotate(var(--chevron-rotation, 0deg)); /* Rotate based on position */
-    transform-origin: center; /* Rotate around the center of the square */
-    z-index: 1; /* Ensure it appears behind text */
-}
-        }
-      /* Initial state for buttons */
-        #randomise-button {
-            display: inline-block;
-        }
-        #re-roll-buttons {
-            display: none;
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#202426">
+  <meta name="description" content="Fast, rules-correct scenario and item setup for Halo: Flashpoint.">
+  <title>Flashpoint Quick Setup</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.webmanifest">
 </head>
 <body>
-    <div class="container">
-        <h1>
-            <img src="https://halo.wiki.gallery/images/thumb/0/08/HFP_Logo.png/1200px-HFP_Logo.png" alt="Halo Flashpoint Logo" class="logo"><br>
-            <span class="subtitle">Quick Setup</span>
-        </h1>
-        <p id="gameMode"></p>
-        <table id="data-table"></table>
-        <p id="coords"></p>
-        <p id="weaponCoords" class="weapon-spawn-heading"></p>
-        <div id="scenario-info" style="display: none;"></div>
-        <div class="button-container">
-            <!-- Original Randomise Button -->
-            <button id="randomise-button" type="button" onclick="randomiseGridAndMode()" aria-label="Randomise Scenario & Item Locations">
-                Randomise Scenario & Item Locations
-            </button>
-            <!-- Re-roll Buttons -->
-            <div id="re-roll-buttons" class="button-container">
-                <button type="button" onclick="reRollGameMode()" aria-label="Re-roll Scenario">
-                    Re-roll Scenario
-                </button>
-                <button type="button" onclick="reRollItems()" aria-label="Re-roll Items">
-                    Re-roll Items
-                </button>
-            </div>
-        </div>
-        <div class="game-mode-buttons" id="gameModeButtons">
-            <button type="button" onclick="selectGameMode('Slayer')" aria-label="Select Slayer Mode">Slayer</button>
-            <button type="button" onclick="selectGameMode('Capture the Flag')" aria-label="Select Capture the Flag Mode">Capture the Flag</button>
-            <button type="button" onclick="selectGameMode('Oddball')" aria-label="Select Oddball Mode">Oddball</button>
-            <button type="button" onclick="selectGameMode('Stronghold')" aria-label="Select Stronghold Mode">Stronghold</button>
-            <button type="button" onclick="selectGameMode('Stockpile')" aria-label="Select Stockpile Mode">Stockpile *WIP*</button>
-        </div>
-    </div>
-    <script>
-        // Constants for grid size and item count
-        const gridSize = 8; // Size of the grid (8x8)
-        const itemsToPick = 8; // Number of items to pick
+  <main class="app-shell">
+    <header class="brand">
+      <img class="brand-logo" src="https://halo.wiki.gallery/images/thumb/0/08/HFP_Logo.png/1200px-HFP_Logo.png" alt="Halo: Flashpoint">
+      <p>Quick Setup</p>
+    </header>
 
-        // CSS styles for respawn points
-        const styles = `
-        <style>
-            .respawn-point {
-                border: 3px solid;
-            }
-        </style>
-        `;
-        document.head.insertAdjacentHTML('beforeend', styles);
+    <section id="welcome" class="welcome" aria-labelledby="welcome-title">
+      <h1 id="welcome-title" class="sr-only">Flashpoint Quick Setup</h1>
+      <button id="randomise-all" class="button button-primary" type="button">
+        Randomise Scenario &amp; Item Locations
+      </button>
+    </section>
 
-        // Shuffles an array multiple times to ensure randomness
-        function shuffleArray(array, iterations = 3) {
-            for (let k = 0; k < iterations; k++) {
-                for (let i = array.length - 1; i >= 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [array[i], array[j]] = [array[j], array[i]];
-                }
-            }
-        }
+    <section id="setup" class="setup" aria-live="polite" hidden>
+      <div class="scenario-heading">
+        <span class="eyebrow">Scenario</span>
+        <h1 id="scenario-name"></h1>
+        <p id="scenario-note"></p>
+      </div>
 
-        // Generates a grid of coordinates based on the given size
-        function generateGrid(size) {
-            const grid = [];
-            for (let i = 0; i < size; i++) {
-                for (let j = 0; j < size; j++) {
-                    grid.push([i, j]);
-                }
-            }
-            return grid;
-        }
+      <div id="board" class="board" role="grid" aria-label="8 by 8 scenario map"></div>
 
-        // Converts grid coordinates into HTML strings with alternating ABAB/BABA patterns
-        function convertCoordinates(grid, items) {
-            let coordsString1 = "", coordsString2 = "";
-            for (let i = 0; i < Math.ceil(items / 2); i++) {
-                const className = i % 2 === 0 ? 'color-a' : 'color-b'; // ABAB pattern
-                coordsString1 += `<div class='${className}'>${grid[i][1] + 1},${grid[i][0] + 1}</div>`;
-            }
-            for (let i = Math.ceil(items / 2); i < items; i++) {
-                const className = i % 2 === 0 ? 'color-b' : 'color-a'; // BABA pattern
-                coordsString2 += `<div class='${className}'>${grid[i][1] + 1},${grid[i][0] + 1}</div>`;
-            }
-            return { coordsString1, coordsString2 };
-        }
+      <div class="readouts">
+        <section class="readout" aria-labelledby="item-heading">
+          <h2 id="item-heading">Item Spawn Locations</h2>
+          <div id="item-coordinates" class="coordinate-list"></div>
+          <p class="readout-note">Duplicate coordinates mean multiple items share that cube.</p>
+        </section>
 
-        // Picks a random game mode from the provided list
-        function pickRandomGameMode(modes) {
-            return modes[Math.floor(Math.random() * modes.length)];
-        }
+        <section class="readout" aria-labelledby="weapon-heading">
+          <h2 id="weapon-heading">Weapon Drop Markers</h2>
+          <div id="weapon-coordinates" class="coordinate-list"></div>
+          <p class="readout-note">Marker ranges are shuffled onto the four fixed locations.</p>
+        </section>
+      </div>
 
-        // Determines whether a cell should display an "X" based on the grid and items
-        function cellValue(grid, x, y, items) {
-            for (let i = 0; i < items; i++) {
-                if (grid[i][0] === x && grid[i][1] === y) {
-                    return "X";
-                }
-            }
-            return " ";
-        }
+      <div class="reroll-controls" aria-label="Reroll controls">
+        <button id="reroll-scenario" class="button button-primary" type="button">Re-roll Scenario</button>
+        <button id="reroll-items" class="button button-primary" type="button">Re-roll Items</button>
+        <button id="reroll-weapons" class="button button-secondary" type="button">Re-shuffle Weapon Markers</button>
+      </div>
+    </section>
 
- // Applies visual styles for the Slayer game mode
-function applySlayerColors(cell, row, col) {
-    // Blue Team Deployment Zone
-    if (row === 7 && (col >= 0 && col <= 3)) {
-        cell.style.backgroundColor = "#4682B4"; // SteelBlue
-        cell.style.color = "#4682B4"; // Invisible marker color matches background
-        cell.innerHTML = "I"; // Invisible marker
-    }
-    // Red Team Deployment Zone
-    if (row === 0 && (col >= 4 && col <= 7)) {
-        cell.style.backgroundColor = "#FF6347"; // Tomato
-        cell.style.color = "#FF6347"; // Invisible marker color matches background
-        cell.innerHTML = "I"; // Invisible marker
-    }
-    // Weapon Spawns
-    if ((col === 1 && row === 4) || (col === 2 && row === 2) || 
-        (col === 5 && row === 5) || (col === 6 && row === 3)) {
-        cell.classList.add('weapon-spawn');
-    }
-    // Blue Respawn Points
-    if ((col === 0 && row === 6) || (col === 3 && row === 0) || (col === 7 && row === 5)) {
-        cell.style.border = "0px solid #4682B4"; // SteelBlue
-        cell.classList.add('respawn-point'); // Add chevron style
-        cell.style.setProperty('--respawn-color', '#4682B4'); // Blue team color
-        setChevronDirection(cell, row, col); // Set chevron direction
-    }
-    // Red Respawn Points
-    if ((col === 0 && row === 2) || (col === 4 && row === 7) || (col === 7 && row === 1)) {
-        cell.style.border = "0px solid #FF6347"; // Tomato
-        cell.classList.add('respawn-point'); // Add chevron style
-        cell.style.setProperty('--respawn-color', '#FF6347'); // Red team color
-        setChevronDirection(cell, row, col); // Set chevron direction
-    }
-}
+    <nav class="mode-picker" aria-label="Choose a scenario">
+      <p>Choose Scenario</p>
+      <div id="mode-buttons" class="mode-buttons"></div>
+    </nav>
 
-// Applies visual styles for the Capture the Flag game mode
-function applyCaptureTheFlagColors(cell, row, col) {
-    // Blue Team Deployment Zone
-    if (row === 7) {
-        cell.style.backgroundColor = "#4682B4"; // SteelBlue
-        cell.style.color = "#4682B4"; // Invisible marker color matches background
-        cell.innerHTML = "I"; // Invisible marker
-    }
-    // Red Team Deployment Zone
-    if (row === 0) {
-        cell.style.backgroundColor = "#FF6347"; // Tomato
-        cell.style.color = "#FF6347"; // Invisible marker color matches background
-        cell.innerHTML = "I"; // Invisible marker
-    }
-    // Weapon Spawns
-    if ((col === 2 && row === 3) || (col === 2 && row === 5) || 
-        (col === 5 && row === 2) || (col === 5 && row === 4)) {
-        cell.classList.add('weapon-spawn');
-    }
-    // Blue Respawn Points
-    if ((col === 0 && row === 5) || (col === 7 && row === 6)) {
-        cell.style.border = "0px solid #4682B4"; // SteelBlue
-        cell.classList.add('respawn-point'); // Add chevron style
-        cell.style.setProperty('--respawn-color', '#4682B4'); // Blue team color
-        setChevronDirection(cell, row, col); // Set chevron direction
-    }
-    // Red Respawn Points
-    if ((col === 0 && row === 1) || (col === 7 && row === 2)) {
-        cell.style.border = "0px solid #FF6347"; // Tomato
-        cell.classList.add('respawn-point'); // Add chevron style
-        cell.style.setProperty('--respawn-color', '#FF6347'); // Red team color
-        setChevronDirection(cell, row, col); // Set chevron direction
-    }
-    // Flag Spawns
-    if (row === 6 && col === 3) { // Box 4,7
-        cell.innerHTML = "🚩";
-        cell.classList.add('blue-flag');
-    } else if (row === 1 && col === 4) { // Box 5,2
-        cell.innerHTML = "🚩";
-        cell.classList.add('red-flag');
-    }
-}
+    <details class="legend">
+      <summary>Map legend</summary>
+      <div class="legend-items">
+        <span><i class="legend-swatch item-marker">×</i> Item</span>
+        <span><i class="legend-swatch weapon-marker">W</i> Weapon drop</span>
+        <span><i class="legend-swatch objective-marker">O</i> Objective</span>
+        <span><i class="legend-swatch respawn-marker">◆</i> Respawn</span>
+      </div>
+    </details>
+  </main>
 
-// Applies visual styles for the Oddball game mode
-function applyOddballColors(cell, row, col) {
-    // Blue Team Deployment Zone
-    if ((row === 7 && (col === 0 || col === 1 || col === 2)) ||
-        (row === 6 && (col === 0 || col === 1)) ||
-        (row === 5 && col === 0)) {
-        cell.style.backgroundColor = "#4682B4"; // SteelBlue
-        cell.style.color = "#4682B4"; // Invisible marker color matches background
-        cell.innerHTML = "I"; // Invisible marker
-    }
-    // Red Team Deployment Zone
-    if ((row === 0 && (col === 5 || col === 6 || col === 7)) ||
-        (row === 1 && (col === 6 || col === 7)) ||
-        (row === 2 && col === 7)) {
-        cell.style.backgroundColor = "#FF6347"; // Tomato
-        cell.style.color = "#FF6347"; // Invisible marker color matches background
-        cell.innerHTML = "I"; // Invisible marker
-    }
-    // Weapon Spawns
-    if ((col === 2 && row === 2) || (col === 2 && row === 4) || 
-        (col === 4 && row === 2) || (col === 5 && row === 5)) {
-        cell.classList.add('weapon-spawn');
-    }
-    // Blue Respawn Points
-    if ((col === 0 && row === 4) || (col === 3 && row === 7)) {
-        cell.style.border = "0px solid #4682B4"; // SteelBlue
-        cell.classList.add('respawn-point'); // Add chevron style
-        cell.style.setProperty('--respawn-color', '#4682B4'); // Blue team color
-        setChevronDirection(cell, row, col); // Set chevron direction
-    }
-    // Red Respawn Points
-    if ((col === 4 && row === 0) || (col === 7 && row === 3)) {
-        cell.style.border = "0px solid #FF6347"; // Tomato
-        cell.classList.add('respawn-point'); // Add chevron style
-        cell.style.setProperty('--respawn-color', '#FF6347'); // Red team color
-        setChevronDirection(cell, row, col); // Set chevron direction
-    }
-    // Oddball Spawn
-    if (row === 4 && col === 4) { // Box 5,5
-        cell.innerHTML = "💀";
-        cell.classList.add('blue-flag');
-    } 
-}
-
-// Applies visual styles for the Stronghold game mode
-function applyStrongholdColors(cell, row, col) {
-    // Red Team Deployment Zone
-    if ((row === 0 && (col >= 0 && col <= 3)) || // Row 1, Columns 1–4
-        (col === 0 && (row >= 0 && row <= 3))) { // Column 1, Rows 1–4
-        cell.style.backgroundColor = "#FF6347"; // Tomato
-        cell.style.color = "#FF6347"; // Invisible marker color matches background
-        cell.innerHTML = "I"; // Invisible marker
-    }
-    // Blue Team Deployment Zone
-    if ((row === 7 && (col >= 4 && col <= 7)) || // Row 8, Columns 5–8
-        (col === 7 && (row >= 4 && row <= 7))) { // Column 8, Rows 5–8
-        cell.style.backgroundColor = "#4682B4"; // SteelBlue
-        cell.style.color = "#4682B4"; // Invisible marker color matches background
-        cell.innerHTML = "I"; // Invisible marker
-    }
-
-    // Weapon Spawns
-            if ((col === 1 && row === 5) || (col === 2 && row === 6) ||
-                (col === 4 && row === 2) || (col === 5 && row === 3)) {
-                cell.classList.add('weapon-spawn'); // Gold border for weapons
-            }
-
-    // Objective Points
-    if ((col === 0 && row === 7) || (col === 3 && row === 4) ||
-        (col === 6 && row === 1)) {
-        cell.innerHTML = "O"; // Denote objective points with "O"
-        cell.style.color = "#FFD700"; // Gold color
-        cell.style.fontWeight = "bold";
-        cell.style.fontSize = "24px"; // Larger font size
-    }
-
-   // Blue Respawn Points (White Square)
-     if ((col === 5 && row === 7) || (col === 7 && row === 6)) {
-        cell.style.border = "0px solid white"; // White border
-        cell.style.backgroundColor = "#4682B4"; // SteelBlue (Blue Team)
-        cell.classList.add('respawn-point'); // Add chevron style
-        cell.style.setProperty('--respawn-color', '#ffffff'); // White for Stronghold
-        setChevronDirection(cell, row, col); // Set chevron direction
-    }
-
-     // Red Respawn Points (White Square)
-     if ((col === 0 && row === 2) || (col === 2 && row === 0)) {
-        cell.style.border = "0px solid white"; // White border
-        cell.style.backgroundColor = "#FF6347"; // Tomato (Red Team)
-        cell.classList.add('respawn-point'); // Add chevron style
-        cell.style.setProperty('--respawn-color', '#ffffff'); // White for Stronghold
-        setChevronDirection(cell, row, col); // Set chevron direction
-    }
-}
-       // Function to set the chevron direction based on the cell's position
-function setChevronDirection(cell, row, col) {
-    let rotationAngle = 0;
-
-    // Determine rotation angle based on column and row
-    if (col === 0) {
-        rotationAngle = 90; // Point right (base aligns with left border)
-    } else if (col === 7) {
-        rotationAngle = -90; // Point left (base aligns with right border)
-    } else if (row === 0) {
-        rotationAngle = 0; // Point up (base aligns with bottom border)
-    } else if (row === 7) {
-        rotationAngle = 180; // Point down (base aligns with top border)
-    }
-
-    // Apply the rotation to the chevron
-    cell.style.setProperty('--chevron-rotation', `${rotationAngle}deg`);
-}
-
-        // Generates a table with grid data and applies game mode-specific styles
-        function generateTable(grid, size, items, mode) {
-            const table = document.getElementById('data-table');
-            table.innerHTML = "";
-            for (let i = size - 1; i >= 0; i--) {
-                const newRow = table.insertRow(-1);
-                newRow.insertCell(0).outerHTML = `<td class='header-cell'>&nbsp;&nbsp;&nbsp;${i + 1}&nbsp;&nbsp;&nbsp;</td>`;
-                for (let j = 0; j < size; j++) {
-                    const cellContent = cellValue(grid, i, j, items);
-                    const cell = newRow.insertCell(j + 1);
-                    cell.innerHTML = cellContent;
-
-                    // Apply game mode-specific styles
-                    if (mode === "Slayer") {
-                        applySlayerColors(cell, i, j);
-                    } else if (mode === "Oddball") {
-                        applyOddballColors(cell, i, j);
-                    } else if (mode === "Capture the Flag") {
-                        applyCaptureTheFlagColors(cell, i, j);
-                    } else if (mode === "Stronghold") {
-                        applyStrongholdColors(cell, i, j); // Stronghold logic
-                    }
-                }
-            }
-            const newRow = table.insertRow(-1);
-            newRow.classList.add('last-row');
-            newRow.insertCell(0).outerHTML = "<th class='header-cell'> </th>";
-            for (let i = 1; i <= size; i++) {
-                newRow.insertCell(i).outerHTML = `<th class='header-cell'>&nbsp;&nbsp;&nbsp;${i}&nbsp;&nbsp;&nbsp;</th>`;
-            }
-        }
-
-        // Randomizes the grid and selects a random game mode
-        function randomiseGridAndMode() {
-            const grid = generateGrid(gridSize);
-            shuffleArray(grid);
-            const { coordsString1, coordsString2 } = convertCoordinates(grid, itemsToPick);
-            document.getElementById('coords').innerHTML = `
-                <p class='item-spawn'>Item Spawn Location</p>
-                <div class='coordinates'>${coordsString1}</div>
-                <div class='coordinates'>${coordsString2}</div>
-            `;
-            
-            let weaponCoords;
-            const gameModes = ["Oddball", "Capture the Flag", "Slayer", "Stronghold"]; // Include Stronghold
-            const randomGameMode = pickRandomGameMode(gameModes);
-
-            if (randomGameMode === "Capture the Flag") {
-                weaponCoords = [
-                    { col: 3, row: 4 },
-                    { col: 6, row: 3 },
-                    { col: 3, row: 6 },
-                    { col: 6, row: 5 }
-                ];
-            } else if (randomGameMode === "Slayer") {
-                weaponCoords = [
-                    { col: 2, row: 5 },
-                    { col: 3, row: 3 },
-                    { col: 6, row: 6 },
-                    { col: 7, row: 4 }
-                ];
-            } else if (randomGameMode === "Oddball") {
-                weaponCoords = [
-                    { col: 2, row: 2 },
-                    { col: 2, row: 4 },
-                    { col: 4, row: 2 },
-                    { col: 5, row: 5 }
-                ];
-            } else if (randomGameMode === "Stronghold") {
-                weaponCoords = [
-                    { col: 2, row: 6 },
-                    { col: 3, row: 7 },
-                    { col: 5, row: 3 },
-                    { col: 6, row: 4 }
-                ];
-            } else {
-                weaponCoords = [];
-            }
-
-            // Apply ABAB pattern to weapon spawn coordinates
-            const weaponCoordsHTML = weaponCoords.map((coord, index) => {
-                const className = index % 2 === 0 ? 'color-a' : 'color-b';
-                return `<div class='${className}'>${coord.col},${coord.row}</div>`;
-            }).join('');
-
-            document.getElementById('weaponCoords').innerHTML = `
-                <p class='item-spawn'>Weapon Spawn Location</p>
-                <div class='coordinates'>${weaponCoordsHTML}</div>
-            `;
-            document.getElementById('gameMode').innerHTML = `<p class='scenario-heading'>Scenario: ${randomGameMode}</p>`;
-            generateTable(grid, gridSize, itemsToPick, randomGameMode);
-
-            // Hide the original button and show the re-roll buttons
-            document.getElementById('randomise-button').style.display = 'none';
-            document.getElementById('re-roll-buttons').style.display = 'flex';
-        }
-
-        // Re-rolls only the game mode
-        function reRollGameMode() {
-            const currentGrid = generateGrid(gridSize);
-            shuffleArray(currentGrid);
-            const gameModes = ["Oddball", "Capture the Flag", "Slayer", "Stronghold"];
-            const randomGameMode = pickRandomGameMode(gameModes);
-
-            // Update the game mode display
-            document.getElementById('gameMode').innerHTML = `<p class='scenario-heading'>Scenario: ${randomGameMode}</p>`;
-
-            // Regenerate the table with the new game mode but keep the current grid
-            generateTable(currentGrid, gridSize, itemsToPick, randomGameMode);
-        }
-
-        // Re-rolls only the item spawn locations
-        function reRollItems() {
-            const currentGameMode = document.querySelector('.scenario-heading').innerText.split(": ")[1];
-            const newGrid = generateGrid(gridSize);
-            shuffleArray(newGrid);
-            const { coordsString1, coordsString2 } = convertCoordinates(newGrid, itemsToPick);
-
-            // Update the item spawn locations
-            document.getElementById('coords').innerHTML = `
-                <p class='item-spawn'>Item Spawn Location</p>
-                <div class='coordinates'>${coordsString1}</div>
-                <div class='coordinates'>${coordsString2}</div>
-            `;
-
-            // Regenerate the table with the new grid but keep the current game mode
-            generateTable(newGrid, gridSize, itemsToPick, currentGameMode);
-        }
-
-        // Selects a specific game mode and updates the UI accordingly
-        function selectGameMode(mode) {
-            const grid = generateGrid(gridSize);
-            shuffleArray(grid);
-            const { coordsString1, coordsString2 } = convertCoordinates(grid, itemsToPick);
-            document.getElementById('coords').innerHTML = `
-                <p class='item-spawn'>Item Spawn Location</p>
-                <div class='coordinates'>${coordsString1}</div>
-                <div class='coordinates'>${coordsString2}</div>
-            `;
-            
-            let weaponCoords;
-            if (mode === "Capture the Flag") {
-                weaponCoords = [
-                    { col: 3, row: 4 },
-                    { col: 6, row: 3 },
-                    { col: 3, row: 6 },
-                    { col: 6, row: 5 }
-                ];
-            } else if (mode === "Slayer") {
-                weaponCoords = [
-                    { col: 2, row: 5 },
-                    { col: 3, row: 3 },
-                    { col: 6, row: 6 },
-                    { col: 7, row: 4 }
-                ];
-            } else if (mode === "Oddball") {
-                weaponCoords = [
-                    { col: 2, row: 2 },
-                    { col: 2, row: 4 },
-                    { col: 4, row: 2 },
-                    { col: 5, row: 5 }
-                ];
-            } else if (mode === "Stronghold") {
-                weaponCoords = [
-                    { col: 2, row: 6 },
-                    { col: 3, row: 7 },
-                    { col: 5, row: 3 },
-                    { col: 6, row: 4 }
-                ];
-            } else {
-                weaponCoords = [];
-            }
-
-            // Apply ABAB pattern to weapon spawn coordinates
-            const weaponCoordsHTML = weaponCoords.map((coord, index) => {
-                const className = index % 2 === 0 ? 'color-a' : 'color-b';
-                return `<div class='${className}'>${coord.col},${coord.row}</div>`;
-            }).join('');
-
-            document.getElementById('weaponCoords').innerHTML = `
-                <p class='item-spawn'>Weapon Spawn Location</p>
-                <div class='coordinates'>${weaponCoordsHTML}</div>
-            `;
-            document.getElementById('gameMode').innerHTML = `<p class='scenario-heading'>Scenario: ${mode}</p>`;
-            generateTable(grid, gridSize, itemsToPick, mode);
-
-            // Hide the original button and show the re-roll buttons
-            document.getElementById('randomise-button').style.display = 'none';
-            document.getElementById('re-roll-buttons').style.display = 'flex';
-        }
-    </script>
+  <noscript>This app needs JavaScript enabled to generate a setup.</noscript>
+  <script type="module" src="src/app.js"></script>
 </body>
 </html>

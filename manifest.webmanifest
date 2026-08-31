@@ -1,0 +1,9 @@
+{
+  "name": "Flashpoint Quick Setup",
+  "short_name": "Quick Setup",
+  "description": "Fast scenario and item setup for Halo: Flashpoint.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#2d2f2f",
+  "theme_color": "#202426"
+}

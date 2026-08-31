@@ -20,6 +20,7 @@ Big Team Battle scenarios are intentionally excluded because they use a differen
 - Multiple Items can occupy the same cube.
 - The four Weapon Drop marker ranges are shuffled across the scenario's fixed weapon locations.
 - Changing only the scenario keeps legal Item coordinates and rerolls any that become illegal in the new deployment zones.
+- The current setup survives an accidental refresh in the same browser tab.
 
 ## Development
 

@@ -5,7 +5,6 @@
   --text: #edf1f2;
   --muted: #aeb8bc;
   --gold: #ffd400;
-  --gold-soft: #fff38b;
   --blue: #4b8dbd;
   --red: #ff624c;
   --objective: #f7df47;
@@ -62,6 +61,7 @@ button { font: inherit; }
 }
 
 .welcome { min-height: 170px; display: grid; place-items: center; }
+.welcome[hidden],
 .setup[hidden] { display: none; }
 .scenario-heading { margin: 20px 0 18px; }
 
@@ -110,6 +110,10 @@ button { font: inherit; }
 
 .cell.deployment-blue { background: #4b8dbd; }
 .cell.deployment-red { background: #ff624c; }
+.cell.zone-cell {
+  background: #22394a;
+  box-shadow: inset 0 0 0 1px rgba(247, 223, 71, 0.22);
+}
 .cell.weapon-spawn { box-shadow: inset 0 0 0 3px var(--gold); }
 
 .cell.weapon-spawn::after {
@@ -156,12 +160,13 @@ button { font: inherit; }
 .respawn-edge.red { --respawn-colour: var(--red); }
 
 .respawn-edge.on-team-deployment {
+  --respawn-colour: #69afe0;
   filter:
-    drop-shadow(1px 0 0 #10212d)
-    drop-shadow(-1px 0 0 #10212d)
-    drop-shadow(0 1px 0 #10212d)
-    drop-shadow(0 -1px 0 #10212d);
+    drop-shadow(0 0 0.8px rgba(255, 255, 255, 0.95))
+    drop-shadow(0 0 0.8px rgba(255, 255, 255, 0.8));
 }
+
+.respawn-edge.red.on-team-deployment { --respawn-colour: #ff7968; }
 
 .respawn-edge.edge-left,
 .respawn-edge.edge-right {
@@ -235,7 +240,25 @@ button { font: inherit; }
   box-shadow: 0 0 0 1px rgba(255, 243, 139, 0.78);
 }
 
-.marker-station { color: #fff; background: #5f3c9b; }
+.marker-objective.flag-blue,
+.marker-objective.flag-red,
+.marker-station {
+  color: #fff;
+  border: 2px solid #10212d;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65);
+}
+
+.marker-objective.flag-blue,
+.marker-station.station-blue { background: #3e86b8; }
+
+.marker-objective.flag-red,
+.marker-station.station-red { background: #e64f3d; }
+
+.marker-station {
+  min-width: 25px;
+  min-height: 21px;
+  padding: 1px 3px;
+}
 
 .readouts { display: grid; gap: 18px; }
 
@@ -393,8 +416,18 @@ summary:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 }
 
 .item-marker { color: #151b1e; background: var(--gold); }
-.weapon-marker { background: var(--panel); box-shadow: inset 0 0 0 3px var(--gold); }
-.objective-marker { color: #151b1e; background: var(--objective); border-radius: 50%; }
+.weapon-marker {
+  color: #536b7b;
+  background: var(--panel);
+  box-shadow: inset 0 0 0 3px var(--gold);
+}
+.objective-marker {
+  color: #151b1e;
+  background: var(--objective);
+  border: 2px solid #10212d;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(255, 243, 139, 0.78);
+}
 .respawn-marker {
   border-radius: 0;
   background: var(--blue);

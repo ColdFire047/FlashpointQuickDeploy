@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import { SCENARIOS, WEAPON_MARKERS } from "../src/scenarios.js";
 import {
   assignWeaponMarkers,
+  canRestoreSetup,
   coordinateKey,
   deploymentKeys,
   generateItems,
@@ -116,4 +117,31 @@ test("strongholds keeps the original opposing corner deployments", () => {
     strongholds.deployment.blue.map(coordinateKey).sort(),
     ["5,8", "6,8", "7,8", "8,8", "8,5", "8,6", "8,7"].sort(),
   );
+});
+
+test("a valid setup can be restored after an accidental refresh", () => {
+  const scenario = SCENARIOS.find(({ id }) => id === "king-of-the-hill");
+  const snapshot = {
+    scenarioId: scenario.id,
+    items: generateItems(scenario),
+    weaponMarkers: assignWeaponMarkers(scenario),
+  };
+
+  assert.equal(canRestoreSetup(snapshot, scenario), true);
+});
+
+test("corrupt or outdated saved setups are rejected", () => {
+  const scenario = SCENARIOS.find(({ id }) => id === "slayer");
+  const snapshot = {
+    scenarioId: scenario.id,
+    items: generateItems(scenario),
+    weaponMarkers: assignWeaponMarkers(scenario),
+  };
+
+  assert.equal(canRestoreSetup({ ...snapshot, scenarioId: "unknown" }, scenario), false);
+  assert.equal(canRestoreSetup({ ...snapshot, items: [{ x: 0, y: 9 }] }, scenario), false);
+  assert.equal(canRestoreSetup({
+    ...snapshot,
+    weaponMarkers: snapshot.weaponMarkers.map((weapon) => ({ ...weapon, marker: "1–2" })),
+  }, scenario), false);
 });

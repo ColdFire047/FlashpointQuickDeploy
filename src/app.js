@@ -1,12 +1,15 @@
 import { SCENARIOS, SCENARIO_BY_ID, WEAPON_MARKERS } from "./scenarios.js";
 import {
   assignWeaponMarkers,
+  canRestoreSetup,
   coordinateKey,
   countCoordinates,
   generateItems,
   keepLegalItems,
   pickScenario,
 } from "./setup.js";
+
+const SESSION_KEY = "flashpoint-quick-setup";
 
 const state = {
   scenario: null,
@@ -201,6 +204,43 @@ function render() {
   elements.modeButtons.querySelectorAll("button").forEach((button) => {
     button.setAttribute("aria-pressed", String(button.dataset.scenario === state.scenario.id));
   });
+
+  saveSession();
+}
+
+function saveSession() {
+  try {
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify({
+      scenarioId: state.scenario.id,
+      items: state.items,
+      weaponMarkers: state.weaponMarkers,
+    }));
+  } catch {
+    // Storage can be disabled without affecting the generator itself.
+  }
+}
+
+function restoreSession() {
+  try {
+    const snapshot = JSON.parse(sessionStorage.getItem(SESSION_KEY));
+    const scenario = SCENARIO_BY_ID.get(snapshot?.scenarioId);
+
+    if (!canRestoreSetup(snapshot, scenario)) {
+      sessionStorage.removeItem(SESSION_KEY);
+      return;
+    }
+
+    state.scenario = scenario;
+    state.items = snapshot.items.map((item) => ({ ...item }));
+    state.weaponMarkers = snapshot.weaponMarkers.map((weapon) => ({ ...weapon }));
+    render();
+  } catch {
+    try {
+      sessionStorage.removeItem(SESSION_KEY);
+    } catch {
+      // Storage can be disabled without affecting the generator itself.
+    }
+  }
 }
 
 function startScenario(scenario, { keepItems = false } = {}) {
@@ -239,6 +279,7 @@ elements.rerollWeapons.addEventListener("click", () => {
 });
 
 buildModeButtons();
+restoreSession();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js"));

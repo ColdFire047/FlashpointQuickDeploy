@@ -100,7 +100,7 @@ export const SCENARIOS = [
   {
     id: "king-of-the-hill",
     name: "King of the Hill",
-    note: "Capture the active 2×2 hill. Hill A is active in Round 1.",
+    note: "Capture the active 2×2 hill.",
     deployment: {
       blue: row(8, 3, 6),
       red: row(1, 3, 6),
@@ -111,6 +111,17 @@ export const SCENARIOS = [
       red: cells([3, 8], [8, 6], [1, 3], [6, 1]),
     },
     objectives: [],
+    hillRotation: {
+      initial: "A",
+      rolls: ["1–2", "3–4", "5–6", "7–8"],
+      nextByCurrent: {
+        A: ["B", "C", "D", "E"],
+        B: ["A", "C", "D", "E"],
+        C: ["A", "B", "D", "E"],
+        D: ["A", "B", "C", "E"],
+        E: ["A", "B", "C", "D"],
+      },
+    },
     zones: [
       { label: "A", cells: cells([4, 4], [5, 4], [4, 5], [5, 5]), anchor: { x: 4, y: 5 } },
       { label: "B", cells: cells([7, 7], [8, 7], [7, 8], [8, 8]), anchor: { x: 7, y: 8 } },

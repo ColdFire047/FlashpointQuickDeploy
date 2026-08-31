@@ -30,29 +30,43 @@ export function deploymentKeys(scenario) {
   ].map(coordinateKey));
 }
 
-export function randomLegalItem(scenario, random = Math.random) {
+export function legalItemCoordinates(scenario) {
   const blocked = deploymentKeys(scenario);
-  let coordinate;
+  const coordinates = [];
 
-  do {
-    coordinate = {
-      x: Math.floor(random() * 8) + 1,
-      y: Math.floor(random() * 8) + 1,
-    };
-  } while (blocked.has(coordinateKey(coordinate)));
+  for (let y = 1; y <= 8; y += 1) {
+    for (let x = 1; x <= 8; x += 1) {
+      const coordinate = { x, y };
+      if (!blocked.has(coordinateKey(coordinate))) coordinates.push(coordinate);
+    }
+  }
 
-  return coordinate;
+  return coordinates;
 }
 
 export function generateItems(scenario, count = 8, random = Math.random) {
-  return Array.from({ length: count }, () => randomLegalItem(scenario, random));
+  const legalCoordinates = legalItemCoordinates(scenario);
+  if (count > legalCoordinates.length) throw new RangeError("Not enough legal cubes for unique items");
+  return shuffle(legalCoordinates, random).slice(0, count);
 }
 
 export function keepLegalItems(items, scenario, random = Math.random) {
   const blocked = deploymentKeys(scenario);
-  return items.map((item) => (
-    blocked.has(coordinateKey(item)) ? randomLegalItem(scenario, random) : { ...item }
-  ));
+  const used = new Set();
+  const retained = items.map((item) => {
+    if (!isBoardCoordinate(item)) return null;
+    const key = coordinateKey(item);
+    if (blocked.has(key) || used.has(key)) return null;
+    used.add(key);
+    return { ...item };
+  });
+  const replacements = shuffle(
+    legalItemCoordinates(scenario).filter((item) => !used.has(coordinateKey(item))),
+    random,
+  );
+  let replacementIndex = 0;
+
+  return retained.map((item) => item ?? replacements[replacementIndex++]);
 }
 
 export function assignWeaponMarkers(scenario, random = Math.random) {
@@ -84,12 +98,13 @@ export function canRestoreSetup(snapshot, scenario) {
 
   const blocked = deploymentKeys(scenario);
   const weaponLocations = new Set(scenario.weapons.map(coordinateKey));
-  const savedWeaponLocations = new Set(snapshot.weaponMarkers.map(coordinateKey));
+  const savedWeaponLocations = new Set(snapshot.weaponMarkers.filter(isBoardCoordinate).map(coordinateKey));
   const savedMarkerRanges = new Set(snapshot.weaponMarkers.map(({ marker }) => marker));
 
   const itemsAreValid = snapshot.items.every((item) => (
     isBoardCoordinate(item) && !blocked.has(coordinateKey(item))
   ));
+  const savedItemLocations = new Set(snapshot.items.filter(isBoardCoordinate).map(coordinateKey));
   const weaponsAreValid = snapshot.weaponMarkers.every((weapon) => (
     isBoardCoordinate(weapon)
     && weaponLocations.has(coordinateKey(weapon))
@@ -97,6 +112,7 @@ export function canRestoreSetup(snapshot, scenario) {
   ));
 
   return itemsAreValid
+    && savedItemLocations.size === snapshot.items.length
     && weaponsAreValid
     && savedWeaponLocations.size === scenario.weapons.length
     && savedMarkerRanges.size === WEAPON_MARKERS.length;

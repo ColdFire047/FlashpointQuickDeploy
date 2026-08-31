@@ -113,14 +113,8 @@ export const SCENARIOS = [
     objectives: [],
     hillRotation: {
       initial: "A",
+      hills: ["B", "C", "D", "E"],
       rolls: ["1–2", "3–4", "5–6", "7–8"],
-      nextByCurrent: {
-        A: ["B", "C", "D", "E"],
-        B: ["A", "C", "D", "E"],
-        C: ["B", "A", "D", "E"],
-        D: ["B", "C", "A", "E"],
-        E: ["B", "C", "D", "A"],
-      },
     },
     zones: [
       { label: "A", cells: cells([4, 4], [5, 4], [4, 5], [5, 5]), anchor: { x: 4, y: 5 } },

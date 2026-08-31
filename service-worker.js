@@ -1,10 +1,15 @@
-const CACHE_NAME = "flashpoint-quick-setup-v15";
+const CACHE_NAME = "flashpoint-quick-setup-v16";
 const APP_FILES = [
   "./",
   "./index.html",
   "./styles.css",
   "./manifest.webmanifest",
   "./icon.svg",
+  "./icon-192.png",
+  "./icon-512.png",
+  "./icon-maskable-512.png",
+  "./apple-touch-icon.png",
+  "./share-card.png",
   "./src/app.js",
   "./src/scenarios.js",
   "./src/setup.js",
@@ -12,7 +17,10 @@ const APP_FILES = [
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_FILES)));
-  self.skipWaiting();
+});
+
+self.addEventListener("message", (event) => {
+  if (event.data?.type === "SKIP_WAITING") self.skipWaiting();
 });
 
 self.addEventListener("activate", (event) => {

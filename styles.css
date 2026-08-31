@@ -507,6 +507,60 @@ summary:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
   clip-path: polygon(0 0, 100% 50%, 0 100%);
 }
 
+.project-footer {
+  width: min(100%, 590px);
+  margin: 28px auto 0;
+  padding-top: 16px;
+  border-top: 1px solid rgba(174, 184, 188, 0.2);
+  color: var(--muted);
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+
+.project-footer p { margin: 4px 0; }
+.project-footer strong { color: var(--text); }
+
+.release-meta {
+  color: #c7d0d3;
+  font-variant-numeric: tabular-nums;
+}
+
+.creator-credit {
+  color: rgba(237, 241, 242, 0.72);
+  letter-spacing: 0.04em;
+}
+
+.about-helper { margin-top: 10px; }
+.about-helper summary {
+  width: max-content;
+  max-width: 100%;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.about-helper[open] summary { margin-bottom: 8px; }
+
+.update-banner {
+  position: fixed;
+  z-index: 20;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px 10px 16px;
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  color: var(--text);
+  background: #182a39;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+  font-size: 0.88rem;
+  font-weight: 650;
+}
+
+.update-banner[hidden] { display: none; }
+.update-banner .button { min-height: 38px; padding: 7px 12px; }
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -545,6 +599,13 @@ summary:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
   .weapon-table td { padding: 3px 4px; }
   .reroll-controls .button,
   .mode-buttons .button { flex: 1 1 135px; }
+  .project-footer { margin-top: 24px; padding-inline: 8px; }
+  .update-banner {
+    right: 8px;
+    bottom: 8px;
+    left: 8px;
+    justify-content: space-between;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

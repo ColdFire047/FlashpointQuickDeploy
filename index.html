@@ -4,11 +4,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#202426">
-  <meta name="description" content="Fast, rules-correct scenario and item setup for Halo: Flashpoint.">
+  <meta name="description" content="Unofficial fan-made scenario and item setup helper for Halo: Flashpoint.">
+  <meta name="application-name" content="Flashpoint Quick Setup">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="FP Setup">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Flashpoint Quick Setup">
+  <meta property="og:description" content="A fast, unofficial setup helper for Halo: Flashpoint scenarios, items and weapon drops.">
+  <meta property="og:url" content="https://coldfire047.github.io/FlashpointQuickDeploy/">
+  <meta property="og:image" content="https://coldfire047.github.io/FlashpointQuickDeploy/share-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Flashpoint Quick Setup app icon on a dark grid background">
+  <meta name="twitter:card" content="summary_large_image">
   <title>Flashpoint Quick Setup</title>
+  <link rel="canonical" href="https://coldfire047.github.io/FlashpointQuickDeploy/">
   <link rel="stylesheet" href="styles.css">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
 </head>
 <body>
   <main class="app-shell">
@@ -95,7 +110,24 @@
         <span><i class="legend-swatch respawn-marker"></i> Respawn</span>
       </div>
     </details>
+
+    <footer class="project-footer">
+      <p><strong>Unofficial fan-made setup helper.</strong> Not affiliated with Microsoft, Halo Studios or Mantic Games.</p>
+      <p>Setup only — check the current official rules for gameplay and scoring.</p>
+      <p class="release-meta">App v2.1 · Scenario layouts: pre-v1.5 sources · v1.5 review pending</p>
+      <p class="creator-credit">Created by ColdFire &amp; Rook</p>
+      <details class="about-helper">
+        <summary>About, house rule &amp; installation</summary>
+        <p>Items use a casual house rule that places all eight in different legal cubes; official independent rolls can produce duplicates.</p>
+        <p>To install the app, open your browser menu and choose <strong>Add to Home screen</strong> or <strong>Install app</strong>.</p>
+      </details>
+    </footer>
   </main>
+
+  <aside id="update-banner" class="update-banner" role="status" aria-live="polite" hidden>
+    <span>A new version is ready.</span>
+    <button id="refresh-app" class="button button-primary" type="button">Refresh</button>
+  </aside>
 
   <noscript>This app needs JavaScript enabled to generate a setup.</noscript>
   <script type="module" src="src/app.js"></script>

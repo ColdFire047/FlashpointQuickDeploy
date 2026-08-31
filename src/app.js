@@ -36,6 +36,8 @@ const elements = {
   rerollScenario: document.querySelector("#reroll-scenario"),
   rerollItems: document.querySelector("#reroll-items"),
   rerollWeapons: document.querySelector("#reroll-weapons"),
+  updateBanner: document.querySelector("#update-banner"),
+  refreshApp: document.querySelector("#refresh-app"),
 };
 
 function hasCoordinate(coordinates, x, y) {
@@ -332,6 +334,36 @@ elements.rerollWeapons.addEventListener("click", () => {
 buildModeButtons();
 restoreSession();
 
+function showUpdate(registration) {
+  if (!registration.waiting || !navigator.serviceWorker.controller) return;
+  elements.updateBanner.hidden = false;
+  elements.refreshApp.onclick = () => {
+    elements.refreshApp.disabled = true;
+    registration.waiting.postMessage({ type: "SKIP_WAITING" });
+  };
+}
+
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js"));
+  let refreshing = false;
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (refreshing) return;
+    refreshing = true;
+    window.location.reload();
+  });
+
+  window.addEventListener("load", async () => {
+    try {
+      const registration = await navigator.serviceWorker.register("./service-worker.js");
+      showUpdate(registration);
+      registration.addEventListener("updatefound", () => {
+        const worker = registration.installing;
+        worker?.addEventListener("statechange", () => {
+          if (worker.state === "installed") showUpdate(registration);
+        });
+      });
+      await registration.update();
+    } catch {
+      // Offline support is optional; the generator still works without it.
+    }
+  });
 }

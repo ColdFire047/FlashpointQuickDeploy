@@ -2,6 +2,10 @@
 
 A fast, mobile-friendly setup helper for core and selected standard-board games of Halo: Flashpoint. It chooses a scenario, generates the eight starting Item locations, shuffles the four numbered Weapon Drop markers and displays the complete setup on one board.
 
+This is an unofficial fan-made setup helper and is not affiliated with Microsoft, Halo Studios or Mantic Games. It covers setup only; use the current official rules for gameplay, scoring and organised play.
+
+Created by **ColdFire & Rook**.
+
 ## Included scenarios
 
 - Slayer
@@ -34,6 +38,8 @@ npm test
 Scenario layouts live in `src/scenarios.js`; setup logic lives in `src/setup.js`; rendering and interaction live in `src/app.js`.
 
 The local app shell is cached for offline use. The decorative Halo logo and circuit-board background are loaded from their existing external sources, so the generator remains functional offline but those two images may be absent.
+
+The public app currently labels its scenario layouts as checked against pre-v1.5 sources. That notice should be updated only after the layouts have been compared with the published v1.5 material.
 
 ## Sources
 

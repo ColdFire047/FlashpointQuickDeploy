@@ -1,17 +1,37 @@
 {
   "name": "Flashpoint Quick Setup",
   "short_name": "FP Setup",
-  "description": "Fast scenario and item setup for Halo: Flashpoint.",
+  "description": "Unofficial fan-made scenario and item setup helper for Halo: Flashpoint.",
+  "id": "./",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#2d2f2f",
   "theme_color": "#202426",
   "icons": [
     {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
       "src": "icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ]
 }

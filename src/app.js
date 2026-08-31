@@ -50,6 +50,18 @@ function respawnEdgeClass(x, y) {
   return "edge-centre";
 }
 
+function objectiveDescription(type) {
+  const descriptions = {
+    "flag-blue": "blue flag",
+    "flag-red": "red flag",
+    oddball: "Oddball",
+    seed: "Power Seed",
+    "station-blue": "blue Power Seed station",
+    "station-red": "red Power Seed station",
+  };
+  return descriptions[type] ?? "objective";
+}
+
 function renderBoard() {
   const { scenario, items } = state;
   const itemCounts = countCoordinates(items);
@@ -73,14 +85,26 @@ function renderBoard() {
     for (let x = 1; x <= 8; x += 1) {
       const key = `${x},${y}`;
       const cell = document.createElement("div");
+      const cellDetails = [];
       cell.className = "cell";
       cell.setAttribute("role", "gridcell");
-      cell.setAttribute("aria-label", `Cube ${key}`);
 
-      if (hasCoordinate(scenario.deployment.blue, x, y)) cell.classList.add("deployment-blue");
-      if (hasCoordinate(scenario.deployment.red, x, y)) cell.classList.add("deployment-red");
-      if (zoneByCoordinate.has(key)) cell.classList.add("zone-cell");
-      if (hasCoordinate(scenario.weapons, x, y)) cell.classList.add("weapon-spawn");
+      if (hasCoordinate(scenario.deployment.blue, x, y)) {
+        cell.classList.add("deployment-blue");
+        cellDetails.push("blue deployment");
+      }
+      if (hasCoordinate(scenario.deployment.red, x, y)) {
+        cell.classList.add("deployment-red");
+        cellDetails.push("red deployment");
+      }
+      if (zoneByCoordinate.has(key)) {
+        cell.classList.add("zone-cell");
+        cellDetails.push(`Hill ${zoneByCoordinate.get(key)}`);
+      }
+      if (hasCoordinate(scenario.weapons, x, y)) {
+        cell.classList.add("weapon-spawn");
+        cellDetails.push("weapon spawn");
+      }
 
       for (const team of ["blue", "red"]) {
         if (hasCoordinate(scenario.respawns[team], x, y)) {
@@ -88,7 +112,7 @@ function renderBoard() {
           respawn.className = `respawn-edge ${team} ${respawnEdgeClass(x, y)}`;
           if (hasCoordinate(scenario.deployment[team], x, y)) respawn.classList.add("on-team-deployment");
           respawn.setAttribute("aria-hidden", "true");
-          cell.setAttribute("aria-label", `Cube ${key}; ${team} respawn`);
+          cellDetails.push(`${team} respawn`);
           cell.append(respawn);
         }
       }
@@ -98,17 +122,25 @@ function renderBoard() {
 
       const objective = objectiveByCoordinate.get(key);
       if (objective) {
-        const objectiveClass = objective.type.startsWith("station") ? "marker-station" : `marker-objective ${objective.type}`;
+        const objectiveClass = objective.type.startsWith("station")
+          ? `marker-station ${objective.type}`
+          : `marker-objective ${objective.type}`;
         markers.append(marker(objective.label, objectiveClass, objective.type));
+        cellDetails.push(objectiveDescription(objective.type));
       }
 
       const zoneLabel = zoneAnchorByCoordinate.get(key);
       if (zoneLabel) markers.append(marker(zoneLabel, "marker-zone", `Hill ${zoneLabel}`));
 
       const itemCount = itemCounts.get(key);
-      if (itemCount) markers.append(marker(itemCount > 1 ? `×${itemCount}` : "×", "marker-item", `${itemCount} item${itemCount > 1 ? "s" : ""}`));
+      if (itemCount) {
+        const itemDescription = `${itemCount} item${itemCount > 1 ? "s" : ""}`;
+        markers.append(marker(itemCount > 1 ? `×${itemCount}` : "×", "marker-item", itemDescription));
+        cellDetails.push(itemDescription);
+      }
 
       cell.append(markers);
+      cell.setAttribute("aria-label", [`Cube ${key}`, ...cellDetails].join("; "));
       fragment.append(cell);
     }
   }

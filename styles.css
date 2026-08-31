@@ -255,6 +255,14 @@ button { font: inherit; }
 .marker-objective.flag-red,
 .marker-station.station-red { background: #e64f3d; }
 
+.marker-zone {
+  position: absolute;
+  left: calc(100% + 2px);
+  top: calc(100% + 2px);
+  z-index: 3;
+  transform: translate(-50%, -50%);
+}
+
 .marker-station {
   min-width: 25px;
   min-height: 21px;
@@ -287,6 +295,10 @@ button { font: inherit; }
 }
 
 .coordinate:nth-child(even) { background: #3a3f41; }
+.coordinate-list .coordinate:nth-child(5),
+.coordinate-list .coordinate:nth-child(7) { background: #3a3f41; }
+.coordinate-list .coordinate:nth-child(6),
+.coordinate-list .coordinate:nth-child(8) { background: #292d2f; }
 .coordinate strong { color: var(--gold); }
 
 .weapon-table-wrap {

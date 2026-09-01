@@ -29,6 +29,7 @@ test("every scenario contains valid board coordinates and four weapon drops", ()
     ];
 
     assert.equal(scenario.weapons.length, 4, `${scenario.name} should have four weapon drops`);
+    assert.ok(scenario.victory.length > 0, `${scenario.name} should explain its victory condition`);
     coordinates.forEach(({ x, y }) => {
       assert.ok(x >= 1 && x <= 8, `${scenario.name} has an invalid x coordinate`);
       assert.ok(y >= 1 && y <= 8, `${scenario.name} has an invalid y coordinate`);

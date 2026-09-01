@@ -10,6 +10,7 @@ export const SCENARIOS = [
     id: "slayer",
     name: "Slayer",
     note: "Slay the enemy team.",
+    victory: "First to the agreed kill limit: 4 / 8 / 12 for a short / medium / long game.",
     deployment: {
       blue: row(8, 1, 4),
       red: row(1, 5, 8),
@@ -26,6 +27,7 @@ export const SCENARIOS = [
     id: "capture-the-flag",
     name: "Capture the Flag",
     note: "Capture the enemy flag and return it to your side.",
+    victory: "First to 3 captures, or most captures after Round 8.",
     deployment: {
       blue: row(8, 1, 8),
       red: row(1, 1, 8),
@@ -45,6 +47,7 @@ export const SCENARIOS = [
     id: "oddball",
     name: "Oddball",
     note: "Find the skull and maintain possession for as long as possible.",
+    victory: "First to 11 points, or most points after Round 6.",
     deployment: {
       blue: cells([1, 8], [2, 8], [3, 8], [1, 7], [2, 7], [1, 6]),
       red: cells([6, 1], [7, 1], [8, 1], [7, 2], [8, 2], [8, 3]),
@@ -61,6 +64,7 @@ export const SCENARIOS = [
     id: "strongholds",
     name: "Strongholds",
     note: "Control the three static objectives to score.",
+    victory: "Reach twice the total VP value in play, or hold the highest score after Round 6.",
     deployment: {
       red: [...row(1, 1, 4), ...column(1, 2, 4)],
       blue: [...row(8, 5, 8), ...column(8, 5, 7)],
@@ -81,6 +85,7 @@ export const SCENARIOS = [
     id: "stockpile",
     name: "Stockpile",
     note: "Collect Power Seeds and deposit them at your team’s station.",
+    victory: "First to bank 5 Power Seeds, or most banked after Round 8.",
     deployment: {
       red: [...row(8, 1, 4), ...column(1, 5, 7)],
       blue: [...row(1, 5, 8), ...column(8, 2, 4)],
@@ -101,6 +106,7 @@ export const SCENARIOS = [
     id: "king-of-the-hill",
     name: "King of the Hill",
     note: "Capture the active 2×2 hill.",
+    victory: "Each hill is worth 4 VP. First to 18 VP, or most after Round 8.",
     deployment: {
       blue: row(8, 3, 6),
       red: row(1, 3, 6),
@@ -128,6 +134,7 @@ export const SCENARIOS = [
     id: "total-control",
     name: "Total Control",
     note: "Capture all three active Control Zones at the same time.",
+    victory: "First to 3 points, or most points after Round 8.",
     deployment: {
       blue: [...row(1, 1, 2), ...row(1, 7, 8)],
       red: [...row(8, 1, 2), ...row(8, 7, 8)],
@@ -183,6 +190,7 @@ export const SCENARIOS = [
     id: "attrition",
     name: "Attrition",
     note: "Use limited respawns and eliminate every enemy model.",
+    victory: "Be the only player with live models remaining.",
     deployment: {
       blue: cells([7, 8], [8, 8], [8, 7], [1, 2], [1, 1], [2, 1]),
       red: cells([1, 8], [2, 8], [1, 7], [8, 2], [7, 1], [8, 1]),
@@ -199,6 +207,7 @@ export const SCENARIOS = [
     id: "vip",
     name: "VIP",
     note: "Randomly nominate one VIP per team and protect them.",
+    victory: "Score 1 point per enemy VIP killed; first to 4, or most after Round 8.",
     deployment: {
       blue: [...row(8, 3, 6), ...row(7, 4, 5)],
       red: [...row(1, 3, 6), ...row(2, 4, 5)],
@@ -215,6 +224,7 @@ export const SCENARIOS = [
     id: "assault",
     name: "Assault",
     note: "Carry your Bomb into the enemy deployment zone and arm it.",
+    victory: "A Bomb in enemy deployment earns 1 Arm point after each enemy activation; first to 3 wins.",
     deployment: {
       blue: [...row(8, 3, 6), ...row(7, 3, 6)],
       red: [...row(1, 3, 6), ...row(2, 3, 6)],

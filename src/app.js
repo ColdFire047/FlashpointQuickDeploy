@@ -24,6 +24,7 @@ const elements = {
   setup: document.querySelector("#setup"),
   scenarioName: document.querySelector("#scenario-name"),
   scenarioNote: document.querySelector("#scenario-note"),
+  scenarioVictory: document.querySelector("#scenario-victory"),
   updateStatus: document.querySelector("#update-status"),
   board: document.querySelector("#board"),
   hillRotation: document.querySelector("#hill-rotation"),
@@ -323,6 +324,7 @@ function render(statusMessage = "") {
   elements.setup.hidden = false;
   elements.scenarioName.textContent = state.scenario.name;
   elements.scenarioNote.textContent = state.scenario.note;
+  elements.scenarioVictory.textContent = `Victory: ${state.scenario.victory}`;
   renderBoard();
   renderHillRotation();
   renderObjectiveSetup();

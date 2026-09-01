@@ -1,8 +1,8 @@
 # Flashpoint Quick Setup
 
-A fast, mobile-friendly setup helper for core and selected standard-board games of Halo: Flashpoint. It chooses a scenario, generates the eight starting Item locations, shuffles the four numbered Weapon Drop markers and displays the complete setup on one board.
+A fast, mobile-friendly setup helper for core and selected standard-board games of Halo: Flashpoint. It chooses a scenario, generates the eight starting Item locations, shuffles the four numbered Weapon Drop markers and displays the complete setup on one board, with a compact victory-condition reminder.
 
-This is an unofficial fan-made setup helper and is not affiliated with Microsoft, Halo Studios or Mantic Games. It covers setup only; use the current official rules for gameplay, scoring and organised play.
+This is an unofficial fan-made setup helper and is not affiliated with Microsoft, Halo Studios or Mantic Games. It is not a rules reference; use the current official rules for gameplay, scoring and organised play.
 
 <p align="center"><img src="creator-mark.png" alt="ColdFire & Rook" width="72"></p>
 
@@ -49,4 +49,4 @@ The public app currently labels its scenario layouts as checked against pre-v1.5
 
 ## Sources
 
-Core scenario layouts and Stockpile are based on the Halo: Flashpoint rulebook. King of the Hill uses the standard-board Organised Play scenario layout. Total Control, Attrition, VIP and Assault use their Mantic app setup maps. The helper displays setup information only and does not reproduce their gameplay or victory-condition text. Always use the latest official rules or scenario source for gameplay wording and victory conditions.
+Core scenario layouts and Stockpile are based on the Halo: Flashpoint rulebook. King of the Hill uses the standard-board Organised Play scenario layout. Total Control, Attrition, VIP and Assault use their Mantic app setup maps. Victory conditions are short paraphrased reminders rather than complete scenario rules. Always use the latest official rules or scenario source for gameplay wording, scoring details and edge cases.

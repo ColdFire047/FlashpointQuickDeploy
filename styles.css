@@ -89,6 +89,18 @@ button { font: inherit; }
   font-size: 0.93rem;
 }
 
+.scenario-heading .scenario-victory {
+  width: fit-content;
+  max-width: min(580px, 94%);
+  padding: 5px 10px;
+  border: 1px solid rgba(255, 212, 0, 0.22);
+  border-radius: 6px;
+  color: var(--text);
+  background: rgba(17, 35, 51, 0.58);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
 .board {
   display: grid;
   grid-template-columns: 24px repeat(8, var(--cell-size));
@@ -405,6 +417,7 @@ button { font: inherit; }
 .coordinate {
   width: 100%;
   padding: 6px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 6px;
   color: var(--text);
   background: #292d2f;

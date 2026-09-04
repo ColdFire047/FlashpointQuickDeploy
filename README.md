@@ -31,6 +31,7 @@ Big Team Battle scenarios are intentionally excluded because they use a differen
 - Total Control rolls and displays the three active Control Zone locations.
 - Assault displays its fixed Weapon token cubes without assigning numbered Weapon Drop markers.
 - Every scenario summarises how to score, the target and the round limit.
+- A separate searchable reference covers all v1.5 keywords and the 15 published Pickup Items.
 - Changing only the scenario keeps legal, unique Item coordinates and replaces any that become illegal or duplicated.
 - The current setup survives an accidental refresh in the same browser tab.
 
@@ -50,4 +51,4 @@ The scenario maps and short scoring summaries were audited against the official 
 
 ## Sources
 
-Core scenario layouts, scoring and Stockpile are based on the Halo: Flashpoint v1.5 living rulebook. King of the Hill uses the v1.5 Organised Play scenario. Total Control, Attrition, VIP and Assault use their Mantic app setup maps and victory conditions. Source details stay here rather than in the quick-reference interface. The in-app text is a short paraphrased reminder rather than a complete rules reference; always use the latest official source for full gameplay wording and edge cases.
+Core scenario layouts, scoring, keywords and Pickup Items are based on the Halo: Flashpoint v1.5 living rulebook. King of the Hill uses the v1.5 Organised Play scenario. Total Control, Attrition, VIP and Assault use their Mantic app setup maps and victory conditions. Source details stay here rather than in the setup interface. All rules text is a short paraphrased reminder rather than a complete rules reference; always use the latest official source for full wording and edge cases. Pickup Item artwork is loaded from Mantic's official rules site and may be unavailable offline.

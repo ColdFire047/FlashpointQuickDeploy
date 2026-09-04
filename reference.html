@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#202426">
+  <meta name="description" content="Searchable Halo: Flashpoint v1.5 keyword and Pickup Item quick reference.">
+  <meta name="application-name" content="Flashpoint Quick Reference">
+  <title>Flashpoint Quick Reference</title>
+  <link rel="canonical" href="https://flashpoint.cf-rook.uk/reference.html">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+</head>
+<body>
+  <main class="app-shell reference-shell">
+    <header class="brand">
+      <img class="brand-logo" src="https://halo.wiki.gallery/images/thumb/0/08/HFP_Logo.png/1200px-HFP_Logo.png" alt="Halo: Flashpoint">
+      <p>Quick Reference</p>
+    </header>
+
+    <a class="back-link" href="index.html">← Setup generator</a>
+
+    <section class="reference-heading" aria-labelledby="reference-title">
+      <span class="eyebrow">Halo: Flashpoint v1.5</span>
+      <h1 id="reference-title">Keywords &amp; Pickup Items</h1>
+      <p>Concise fan-made reminders. Check the official living rules for complete wording and edge cases.</p>
+    </section>
+
+    <section class="reference-controls" aria-label="Reference controls">
+      <div class="reference-tabs" role="group" aria-label="Reference section">
+        <button class="button button-secondary" type="button" data-reference-section="keywords" aria-pressed="true">Keywords</button>
+        <button class="button button-secondary" type="button" data-reference-section="items" aria-pressed="false">Pickup Items</button>
+      </div>
+      <label class="reference-search-label" for="reference-search">Search reference</label>
+      <input id="reference-search" class="reference-search" type="search" autocomplete="off" placeholder="Search keywords…">
+    </section>
+
+    <p id="reference-count" class="reference-count" role="status" aria-live="polite"></p>
+    <section id="reference-results" class="reference-results" aria-label="Reference results"></section>
+
+    <footer class="project-footer">
+      <img class="creator-mark" src="creator-mark.png" alt="ColdFire and Rook">
+      <p class="footer-summary"><strong>Unofficial fan-made quick reference.</strong></p>
+      <p><a href="https://haloflashpoint.manticgames.com/the-app/halo-flashpoint-rules/">Open the official living rules</a></p>
+    </footer>
+  </main>
+
+  <script type="module" src="src/reference.js"></script>
+</body>
+</html>

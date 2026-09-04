@@ -11,8 +11,8 @@ export const SCENARIOS = [
     name: "Slayer",
     note: "Slay the enemy team.",
     ruleset: "Core",
-    scoring: "1 kill per enemy model killed. VP keyword bonuses do not apply.",
-    target: "4 / 8 / 12 kills",
+    scoring: "1 VP per enemy unit killed.",
+    target: "4 / 8 / 12 VP",
     rounds: "No fixed limit",
     deployment: {
       blue: row(8, 1, 4),

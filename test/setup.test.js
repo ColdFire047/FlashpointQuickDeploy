@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 
 import { SCENARIOS, WEAPON_MARKERS } from "../src/scenarios.js";
+import { KEYWORDS, PICKUP_ITEMS, matchesReference } from "../src/reference-data.js";
 import {
   assignWeaponMarkers,
   canRestoreSetup,
@@ -89,7 +90,7 @@ test("hill rotation offers every other hill exactly once for each current hill",
 
 test("v1.5 scoring summaries retain the official targets and round caps", () => {
   const expected = {
-    slayer: { scoring: /1 kill per enemy model killed.*VP keyword bonuses do not apply/, target: "4 / 8 / 12 kills", rounds: "No fixed limit" },
+    slayer: { scoring: /1 VP per enemy unit killed/, target: "4 / 8 / 12 VP", rounds: "No fixed limit" },
     "capture-the-flag": { scoring: /1 VP per enemy flag capture/, target: "3 VP", rounds: "8" },
     oddball: { scoring: /1 VP.*enemy activation.*1 VP.*Assault kill/, target: "11 VP", rounds: "6" },
     strongholds: { scoring: /VP shown.*uncontested objective/, target: "2× total VP in play", rounds: "6" },
@@ -109,11 +110,28 @@ test("v1.5 scoring summaries retain the official targets and round caps", () => 
   });
 });
 
-test("casual Slayer does not use Organised Play VP scoring", () => {
+test("casual Slayer uses the simple player-defined kill boundary", () => {
   const slayer = SCENARIOS.find(({ id }) => id === "slayer");
 
   assert.equal(slayer.ruleset, "Core");
-  assert.doesNotMatch(slayer.scoring, /2 VP|HVT.*add|Spartan Killer.*add/);
+  assert.equal(slayer.scoring, "1 VP per enemy unit killed.");
+  assert.doesNotMatch(slayer.scoring, /cannot|do not|bonus/i);
+});
+
+test("the v1.5 reference contains unique searchable keywords and Pickup Items", () => {
+  assert.equal(KEYWORDS.length, 53);
+  assert.equal(PICKUP_ITEMS.length, 15);
+  assert.equal(new Set(KEYWORDS.map(({ name }) => name)).size, KEYWORDS.length);
+  assert.equal(new Set(PICKUP_ITEMS.map(({ name }) => name)).size, PICKUP_ITEMS.length);
+
+  [...KEYWORDS, ...PICKUP_ITEMS].forEach((entry) => {
+    assert.ok(entry.name.length > 0);
+    assert.ok(entry.summary.length > 0);
+  });
+
+  assert.equal(KEYWORDS.filter((entry) => matchesReference(entry, "HVT")).length, 1);
+  assert.equal(KEYWORDS.filter((entry) => matchesReference(entry, "shield")).length > 2, true);
+  assert.equal(PICKUP_ITEMS.filter((entry) => matchesReference(entry, "heal")).some(({ name }) => name === "Health Pack"), true);
 });
 
 test("every respawn location is on a board edge", () => {

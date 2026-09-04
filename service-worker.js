@@ -1,7 +1,8 @@
-const CACHE_NAME = "flashpoint-quick-setup-v22";
+const CACHE_NAME = "flashpoint-quick-setup-v23";
 const APP_FILES = [
   "./",
   "./index.html",
+  "./reference.html",
   "./styles.css",
   "./manifest.webmanifest",
   "./icon.svg",
@@ -12,6 +13,8 @@ const APP_FILES = [
   "./creator-mark.png",
   "./share-card.png",
   "./src/app.js",
+  "./src/reference.js",
+  "./src/reference-data.js",
   "./src/scenarios.js",
   "./src/setup.js",
 ];

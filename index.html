@@ -12,14 +12,14 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Flashpoint Quick Setup">
   <meta property="og:description" content="A fast, unofficial setup helper for Halo: Flashpoint scenarios, items and weapon drops.">
-  <meta property="og:url" content="https://coldfire047.github.io/FlashpointQuickDeploy/">
-  <meta property="og:image" content="https://coldfire047.github.io/FlashpointQuickDeploy/share-card.png">
+  <meta property="og:url" content="https://flashpoint.cf-rook.uk/">
+  <meta property="og:image" content="https://flashpoint.cf-rook.uk/share-card.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Flashpoint Quick Setup app icon on a dark grid background">
   <meta name="twitter:card" content="summary_large_image">
   <title>Flashpoint Quick Setup</title>
-  <link rel="canonical" href="https://coldfire047.github.io/FlashpointQuickDeploy/">
+  <link rel="canonical" href="https://flashpoint.cf-rook.uk/">
   <link rel="stylesheet" href="styles.css">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -44,7 +44,22 @@
         <span class="eyebrow">Scenario</span>
         <h1 id="scenario-name"></h1>
         <p id="scenario-note"></p>
-        <p id="scenario-victory" class="scenario-victory"></p>
+        <dl class="scenario-rules" aria-label="Scoring and game limit">
+          <div class="scenario-limits">
+            <div>
+              <dt>Target</dt>
+              <dd id="scenario-target"></dd>
+            </div>
+            <div>
+              <dt>Rounds</dt>
+              <dd id="scenario-rounds"></dd>
+            </div>
+          </div>
+          <div class="scenario-scoring">
+            <dt>Scoring</dt>
+            <dd id="scenario-scoring"></dd>
+          </div>
+        </dl>
       </div>
 
       <p id="update-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
@@ -133,11 +148,12 @@
     <footer class="project-footer">
       <img class="creator-mark" src="creator-mark.png" alt="ColdFire and Rook">
       <p class="footer-summary"><strong>Unofficial fan-made setup helper.</strong> Setup only.</p>
-      <p class="release-meta">App v2.2 · Scenario layouts: pre-v1.5 sources · v1.5 review pending</p>
+      <p class="release-meta">App v2.3 · Rules audit: Halo: Flashpoint v1.5 · September 2026</p>
       <details class="about-helper">
         <summary>Legal, rules &amp; installation</summary>
-        <p>Not affiliated with Microsoft, Halo Studios or Mantic Games. Check the current official rules for gameplay and scoring.</p>
+        <p>Not affiliated with Microsoft, Halo Studios or Mantic Games. Check the <a href="https://haloflashpoint.manticgames.com/the-app/halo-flashpoint-rules/">current official rules</a> for full gameplay wording and edge cases.</p>
         <p>Items use a casual house rule that places all eight in different legal cubes; official independent rolls can produce duplicates.</p>
+        <p>This is a curated standard-board selection, not a complete Organised Play scenario library. Big Team Battle and other OP variants are not included.</p>
         <p>To install the app, open your browser menu and choose <strong>Add to Home screen</strong> or <strong>Install app</strong>.</p>
       </details>
     </footer>

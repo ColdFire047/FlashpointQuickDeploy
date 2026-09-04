@@ -29,7 +29,10 @@ test("every scenario contains valid board coordinates and four weapon drops", ()
     ];
 
     assert.equal(scenario.weapons.length, 4, `${scenario.name} should have four weapon drops`);
-    assert.ok(scenario.victory.length > 0, `${scenario.name} should explain its victory condition`);
+    assert.ok(scenario.ruleset.length > 0, `${scenario.name} should identify its ruleset`);
+    assert.ok(scenario.scoring.length > 0, `${scenario.name} should explain how to score`);
+    assert.ok(scenario.target.length > 0, `${scenario.name} should explain how to win`);
+    assert.ok(scenario.rounds.length > 0, `${scenario.name} should explain its round limit`);
     coordinates.forEach(({ x, y }) => {
       assert.ok(x >= 1 && x <= 8, `${scenario.name} has an invalid x coordinate`);
       assert.ok(y >= 1 && y <= 8, `${scenario.name} has an invalid y coordinate`);
@@ -82,6 +85,35 @@ test("hill rotation offers every other hill exactly once for each current hill",
     assert.equal(nextHills.includes(current), false);
     assert.deepEqual([...nextHills].sort(), hillLabels.filter((label) => label !== current).sort());
   });
+});
+
+test("v1.5 scoring summaries retain the official targets and round caps", () => {
+  const expected = {
+    slayer: { scoring: /1 kill per enemy model killed.*VP keyword bonuses do not apply/, target: "4 / 8 / 12 kills", rounds: "No fixed limit" },
+    "capture-the-flag": { scoring: /1 VP per enemy flag capture/, target: "3 VP", rounds: "8" },
+    oddball: { scoring: /1 VP.*enemy activation.*1 VP.*Assault kill/, target: "11 VP", rounds: "6" },
+    strongholds: { scoring: /VP shown.*uncontested objective/, target: "2× total VP in play", rounds: "6" },
+    stockpile: { scoring: /1 VP per Power Seed currently deposited/, target: "5 VP", rounds: "8" },
+    "king-of-the-hill": { scoring: /4 VP.*active hill/, target: "20 VP", rounds: "8" },
+    "total-control": { scoring: /1 VP.*all three Control Zones/, target: "3 VP", rounds: "8" },
+    attrition: { scoring: /No VP.*eliminate every enemy unit/, target: "Enemy elimination", rounds: "No fixed limit" },
+    vip: { scoring: /1 VP.*enemy VIP/, target: "4 VP", rounds: "8" },
+    assault: { scoring: /1 VP.*enemy activation.*Bomb/, target: "3 VP", rounds: "8" },
+  };
+
+  Object.entries(expected).forEach(([id, summary]) => {
+    const scenario = SCENARIOS.find((entry) => entry.id === id);
+    assert.match(scenario.scoring, summary.scoring);
+    assert.equal(scenario.target, summary.target);
+    assert.equal(scenario.rounds, summary.rounds);
+  });
+});
+
+test("casual Slayer does not use Organised Play VP scoring", () => {
+  const slayer = SCENARIOS.find(({ id }) => id === "slayer");
+
+  assert.equal(slayer.ruleset, "Core");
+  assert.doesNotMatch(slayer.scoring, /2 VP|HVT.*add|Spartan Killer.*add/);
 });
 
 test("every respawn location is on a board edge", () => {

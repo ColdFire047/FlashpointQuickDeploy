@@ -89,16 +89,55 @@ button { font: inherit; }
   font-size: 0.93rem;
 }
 
-.scenario-heading .scenario-victory {
-  width: fit-content;
-  max-width: min(580px, 94%);
-  padding: 5px 10px;
+.scenario-rules {
+  width: min(580px, 94%);
+  margin: 10px auto 0;
+  padding: 6px 10px;
   border: 1px solid rgba(255, 212, 0, 0.22);
   border-radius: 6px;
-  color: var(--text);
   background: rgba(17, 35, 51, 0.58);
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   line-height: 1.35;
+  text-align: left;
+}
+
+.scenario-limits {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.scenario-limits > div {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  min-width: 0;
+}
+
+.scenario-limits > div + div {
+  padding-left: 12px;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.scenario-scoring {
+  display: grid;
+  grid-template-columns: 58px 1fr;
+  gap: 8px;
+  padding-top: 5px;
+}
+
+.scenario-rules dt {
+  color: var(--gold);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.scenario-rules dd {
+  margin: 0;
+  color: var(--text);
 }
 
 .board {
@@ -602,6 +641,7 @@ summary:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 
 .project-footer p { margin: 4px 0; }
 .project-footer strong { color: var(--text); }
+.project-footer a { color: var(--text); }
 
 .creator-mark {
   display: block;

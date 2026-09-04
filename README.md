@@ -1,6 +1,6 @@
 # Flashpoint Quick Setup
 
-A fast, mobile-friendly setup helper for core and selected standard-board games of Halo: Flashpoint. It chooses a scenario, generates the eight starting Item locations, shuffles the four numbered Weapon Drop markers and displays the complete setup on one board, with a compact victory-condition reminder.
+A fast, mobile-friendly setup helper for core and selected standard-board games of Halo: Flashpoint. It chooses a scenario, generates the eight starting Item locations, shuffles the four numbered Weapon Drop markers and displays the complete setup on one board, with compact scoring, win-target and round-limit reminders.
 
 This is an unofficial fan-made setup helper and is not affiliated with Microsoft, Halo Studios or Mantic Games. It is not a rules reference; use the current official rules for gameplay, scoring and organised play.
 
@@ -30,6 +30,7 @@ Big Team Battle scenarios are intentionally excluded because they use a differen
 - King of the Hill includes the Round 1 starting hill and the D8 lookup for every later hill change.
 - Total Control rolls and displays the three active Control Zone locations.
 - Assault displays its fixed Weapon token cubes without assigning numbered Weapon Drop markers.
+- Every scenario summarises how to score, the target and the round limit.
 - Changing only the scenario keeps legal, unique Item coordinates and replaces any that become illegal or duplicated.
 - The current setup survives an accidental refresh in the same browser tab.
 
@@ -45,8 +46,8 @@ Scenario layouts live in `src/scenarios.js`; setup logic lives in `src/setup.js`
 
 The local app shell is cached for offline use. The decorative Halo logo and circuit-board background are loaded from their existing external sources, so the generator remains functional offline but those two images may be absent.
 
-The public app currently labels its scenario layouts as checked against pre-v1.5 sources. That notice should be updated only after the layouts have been compared with the published v1.5 material.
+The scenario maps and short scoring summaries were audited against the official Halo: Flashpoint v1.5 living rules and September 2026 errata. The four Mantic app scenarios remain based on their official setup pages.
 
 ## Sources
 
-Core scenario layouts and Stockpile are based on the Halo: Flashpoint rulebook. King of the Hill uses the standard-board Organised Play scenario layout. Total Control, Attrition, VIP and Assault use their Mantic app setup maps. Victory conditions are short paraphrased reminders rather than complete scenario rules. Always use the latest official rules or scenario source for gameplay wording, scoring details and edge cases.
+Core scenario layouts, scoring and Stockpile are based on the Halo: Flashpoint v1.5 living rulebook. King of the Hill uses the v1.5 Organised Play scenario. Total Control, Attrition, VIP and Assault use their Mantic app setup maps and victory conditions. Source details stay here rather than in the quick-reference interface. The in-app text is a short paraphrased reminder rather than a complete rules reference; always use the latest official source for full gameplay wording and edge cases.

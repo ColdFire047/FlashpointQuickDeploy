@@ -19,20 +19,9 @@ function textElement(tagName, className, text) {
   return element;
 }
 
-function keywordCard(keyword) {
-  const article = document.createElement("article");
-  article.className = "reference-card keyword-card";
-  article.append(
-    textElement("h2", "reference-card-title", keyword.name),
-    textElement("p", "reference-card-summary", keyword.summary),
-  );
-  return article;
-}
-
-function itemCard(item) {
-  const article = document.createElement("article");
-  article.className = "reference-card item-card";
-
+function itemHeading(item) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "item-reference-heading";
   const iconWrap = document.createElement("div");
   iconWrap.className = "item-reference-icon";
 
@@ -49,16 +38,47 @@ function itemCard(item) {
     iconWrap.append(textElement("span", "item-icon-fallback", item.fallback));
   }
 
-  const content = document.createElement("div");
-  const heading = document.createElement("div");
-  heading.className = "item-reference-heading";
-  heading.append(
-    textElement("h2", "reference-card-title", item.name),
+  const label = document.createElement("div");
+  label.className = "item-reference-label";
+  label.append(
+    textElement("strong", "reference-entry-name", item.name),
     textElement("span", "item-type", item.type),
   );
-  content.append(heading, textElement("p", "reference-card-summary", item.summary));
-  article.append(iconWrap, content);
-  return article;
+  wrapper.append(iconWrap, label);
+  return wrapper;
+}
+
+function referenceTable(entries, isItems) {
+  const table = document.createElement("table");
+  table.className = `reference-table ${isItems ? "item-reference-table" : "keyword-reference-table"}`;
+
+  const caption = textElement(
+    "caption",
+    "sr-only",
+    isItems ? "Pickup Item quick reference" : "Keyword quick reference",
+  );
+  const head = document.createElement("thead");
+  const headRow = document.createElement("tr");
+  const nameHeading = textElement("th", "", isItems ? "Pickup Item" : "Keyword");
+  nameHeading.scope = "col";
+  const effectHeading = textElement("th", "", "Quick effect");
+  effectHeading.scope = "col";
+  headRow.append(nameHeading, effectHeading);
+  head.append(headRow);
+
+  const body = document.createElement("tbody");
+  entries.forEach((entry) => {
+    const row = document.createElement("tr");
+    const nameCell = document.createElement("td");
+    const effectCell = document.createElement("td");
+    nameCell.append(isItems ? itemHeading(entry) : textElement("strong", "reference-entry-name", entry.name));
+    effectCell.textContent = entry.summary;
+    row.append(nameCell, effectCell);
+    body.append(row);
+  });
+
+  table.append(caption, head, body);
+  return table;
 }
 
 function render() {
@@ -77,9 +97,7 @@ function render() {
     return;
   }
 
-  const fragment = document.createDocumentFragment();
-  matches.forEach((entry) => fragment.append(isItems ? itemCard(entry) : keywordCard(entry)));
-  elements.results.replaceChildren(fragment);
+  elements.results.replaceChildren(referenceTable(matches, isItems));
 }
 
 elements.tabs.forEach((button) => {
